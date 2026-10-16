@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Video quality tier picker (FlightActivity.onVideoQualityTapped), reached by LONG-PRESSING the
+     LIVE badge. Same shape as dialog_ar_options.xml's range row so the two in-flight menus read as
+     one family.
+
+     The RadioGroup is EMPTY here and filled in code from TranscodeProfile.values(): the tiers,
+     their order and their labels all live in the enum, so adding or renaming one cannot leave a
+     stale button behind in the menu that selects it. Nothing about resolution/fps/bitrate appears
+     anywhere in this file on purpose — see TranscodeProfile.label.
+
+     Text colours hardcoded via styles — inflated with the Activity's layoutInflater, not the
+     dialog's, same as dialog_ar_options.xml. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="4dp">
+
+    <RadioGroup
+        android:id="@+id/videoQualityGroup"
+        style="@style/takFormRow"
+        android:orientation="horizontal" />
+
+    <!-- Emergency Broadcast — FlightActivity.wireEmergencyBroadcastRow. All three stay
+         GONE unless an Elevated account (video channel) is configured; the text and which of the
+         two buttons show follow the running state. It lives in this menu, not in the actions
+         column, on purpose (design decision): a long-press and a button that says what it
+         does are the friction, and the column keeps its six pills. -->
+    <TextView
+        android:id="@+id/videoEmergencyCaption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text=""
+        android:textColor="@color/tp_text_secondary"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+    <Button
+        style="@style/TakButton.Primary"
+        android:id="@+id/videoEmergencyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Start Emergency Broadcast (15 min)"
+        android:visibility="gone" />
+
+    <Button
+        style="@style/TakButton.Neutral"
+        android:id="@+id/videoEmergencyStopButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Stop Emergency Broadcast"
+        android:visibility="gone" />
+
+</LinearLayout>

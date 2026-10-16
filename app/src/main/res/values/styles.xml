@@ -1,0 +1,297 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- No ActionBar — the TAKPilot2 screens draw their own chrome (the flight screen's
+         instrument toolbar, the home screen's cards), so the platform bar is dead space.
+
+         The status bar is SOLID, matching the flight background, not transparent.
+
+         Note that the flight screen DOES go immersive: FlightActivity.goFullScreen() sets
+         SYSTEM_UI_FLAG_FULLSCREEN and IMMERSIVE_STICKY and re-applies them in
+         onWindowFocusChanged. There is no white band, because the bar is hidden.
+
+         The real reason to keep it solid: IMMERSIVE_STICKY shows the bar transiently after a
+         swipe, and SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN makes the window draw under it, so a
+         transparent bar puts the system clock and icons straight onto live video where a bright
+         frame can make them unreadable. Same reasoning as the HUD panels. -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/tp_bg_flight</item>
+    </style>
+
+    <!-- Home screen: no ActionBar/title, but a SOLID status bar (not transparent) — the home
+         layout doesn't go immersive/fullscreen like the flight screen does, so a transparent
+         status bar leaves an unpainted gap: content is inset below it, but nothing draws INTO
+         that strip and the platform's default light scrim shows through instead of the app's
+         dark background. Colour matches the home layout's #0E0E10 background. -->
+    <style name="AppTheme.NoActionBar.SolidStatusBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/tp_bg_home</item>
+    </style>
+
+    <style name="CodecTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="Widget.SeekBar.Setting" parent="@android:style/Widget.SeekBar">
+        <item name="android:maxHeight">2dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/layer_list_seekbar_horizontal</item>
+        <item name="android:minHeight">1dp</item>
+        <item name="android:thumb">@drawable/selector_seekbar_dot</item>
+        <item name="android:thumbOffset">10dp</item>
+        <item name="android:splitTrack" tools:targetApi="lollipop">false</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:textColor">@drawable/selector_text_black_white</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:minHeight">33dp</item>
+        <item name="android:minWidth">70dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <style name="waypoint_checkbox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/waypoint_checkbox_icon</item>
+    </style>
+
+    <style name="takLabelStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tp_text_secondary</item>
+        <item name="android:textSize">13sp</item>
+        <!-- Vertical padding trimmed 12/4 -> 6/2 to make room for section 0
+             without shrinking any text. Every label on every section tightens by 8dp, which
+             is where the space came from. Horizontal spacing is deliberately unchanged. -->
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+    <style name="takFieldStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:textColorHint">@color/tp_text_disabled</item>
+        <item name="android:background">@color/tp_surface_field</item>
+        <!-- Was a uniform 12dp. Split so the fields lose HEIGHT (the scarce axis) and keep
+             their horizontal breathing room and touch width. -->
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="homeCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/tp_surface_card</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+    </style>
+    <style name="homeCardTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tp_text_caption</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
+    </style>
+    <style name="homeCardValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">2dp</item>
+    </style>
+    <style name="homeCardSub">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tp_text_secondary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- Dark dialog styling. -->
+    <style name="TakDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/tak_dialog_bg</item>
+        <item name="colorAccent">@color/tp_accent</item>
+        <item name="android:colorAccent">@color/tp_accent</item>
+        <item name="android:textColorPrimary">@color/tp_text_primary</item>
+        <item name="android:textColorSecondary">@color/tp_text_secondary</item>
+        <item name="android:textColorPrimaryInverse">@color/tp_text_primary</item>
+        <item name="android:textColorAlertDialogListItem">@color/tp_text_primary</item>
+        <item name="android:editTextColor">@color/tp_text_primary</item>
+        <item name="android:textColorHint">@color/tp_text_hint</item>
+    </style>
+
+    <!-- Same, but the positive/default-highlight colour reads as a warning — for confirms
+         where getting it wrong has a real consequence (resetting the home point). -->
+    <style name="TakDialogTheme.Destructive">
+        <item name="colorAccent">@color/tp_btn_danger_dialog</item>
+        <item name="android:colorAccent">@color/tp_btn_danger_dialog</item>
+    </style>
+
+    <!-- Button roles. One style per role so the green=go / grey=neutral / blue=info /
+         red=destructive convention is declared once instead of re-typed as an inline
+         textColor+backgroundTint pair on every button. Width/height/
+         margin stay on each button since those vary; the style only carries the role colours. -->
+    <style name="TakButton">
+        <item name="android:textColor">@color/tp_text_primary</item>
+    </style>
+    <style name="TakButton.Primary">
+        <item name="android:backgroundTint">@color/tp_btn_primary</item>
+    </style>
+    <style name="TakButton.Neutral">
+        <item name="android:backgroundTint">@color/tp_btn_neutral</item>
+    </style>
+    <style name="TakButton.Info">
+        <item name="android:backgroundTint">@color/tp_btn_info</item>
+    </style>
+    <style name="TakButton.Danger">
+        <item name="android:backgroundTint">@color/tp_btn_danger</item>
+    </style>
+
+    <!-- Pre-Flight Setup form layout. -->
+    <style name="takFormRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="takColumn">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+    <style name="takColumnRadio">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:buttonTint">@color/tp_accent</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- AR options / FOV-calibration dialog styles. -->
+    <style name="takFovStepButton">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:backgroundTint">@color/tp_btn_neutral</item>
+    </style>
+
+    <style name="takFovValue">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="takArCheck">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:buttonTint">@color/tp_accent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingStart">8dp</item>
+    </style>
+
+    <!-- Flight-screen HUD readouts: plain text over video, no box, drop-shadowed so it stays
+         legible on bright ground. -->
+    <style name="hudText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/tp_shadow</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">3</item>
+    </style>
+
+    <!-- Flight-screen readout column (Clock / SPI overlay text / gimbal pitch / FAA ceiling /
+         RTH altitude) — everything from fpvClock down to fpvRthAltitude. Identical to hudText
+         (which stays untouched — it's shared with the EV-scale labels) except the text size, which comes from
+         @dimen/flight_readout_text_size so it can scale up specifically on the Smart Controller
+         V3's screen (see values-w820dp) while staying the current size on smaller hardware. -->
+    <style name="flightReadoutText" parent="hudText">
+        <item name="android:textSize">@dimen/flight_readout_text_size</item>
+    </style>
+
+    <!-- HUD text drawn by OutlinedTextView: a black outline replaces the drop shadow, thus the
+         shadow is switched OFF here. Leaving it on draws a halo on the outline pass too, which
+         reads as a smear rather than a border. -->
+    <style name="hudTextOutlined" parent="hudText">
+        <item name="android:shadowRadius">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+    </style>
+
+    <style name="flightReadoutOutlined" parent="hudTextOutlined">
+        <item name="android:textSize">@dimen/flight_readout_text_size</item>
+    </style>
+
+    <!-- One cell of the flight-screen resource-monitor row (flightResourceMonitorRow). Equal
+         weight + centered text is what makes the five cells land evenly spaced across the row's
+         width, not just left-packed. -->
+    <style name="flightResCell">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">@color/tp_state_go_soft</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+    <!-- Rows of a dialog list (the marker-affiliation and Change Type pickers). Extracted from
+         item_marker_affiliation.xml so a second list dialog has something to reuse instead of
+         copying the row.
+
+         ⚠ The icon is 32dp and the label 18sp, sized for the Smart Controller's larger screen.
+         Do not shrink them without looking at the screen. -->
+    <style name="TakDialogListIcon">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+    </style>
+    <style name="TakDialogListLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:textColor">@color/tp_text_primary</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

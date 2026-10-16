@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AR overlay options (FlightActivity.onArOptionsTapped). Replaces the old
+     setMultiChoiceItems list, which used AlertDialog's stock two-line item layout and so was the
+     one menu in the app that didn't look like the rest of it.
+
+     Scrolls because this dialog opens over live video in landscape: on a short screen the range
+     row would otherwise be pushed under the button bar with nothing to indicate it exists.
+
+     Text colours hardcoded — inflated via the Activity's own layoutInflater, not the dialog's,
+     same as dialog_ar_fov.xml. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="4dp">
+
+        <!-- ACCURACY LIMIT, STATED WHERE THE FEATURE IS TURNED ON.
+             Measured in flight: aiming at one target from three headings gave bearing
+             errors of 1-6 degrees, up to 27 m of miss at 350 m. The cause is heading-dependent
+             magnetometer error on the aircraft, which no fixed offset in this app can remove. A
+             pilot must not read a marker's drawn position as an identification of one object, so
+             the limit is stated here rather than only in the guide two screens away. -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="For general awareness of an AREA. Not accurate for a point — do not use it to pick one building or vehicle from its neighbours. A marker at the crosshair is better, but it has the same compass error: at 1,000 ft it can be 80 ft to the side. Compare it with the map before you send it."
+            android:textColor="@color/tp_state_caution"
+            android:textSize="12sp"
+            android:paddingBottom="10dp" />
+
+        <!-- Populated in code from ArSettings.Category so the menu and the enum cannot drift. -->
+        <LinearLayout
+            android:id="@+id/arCategoryContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/tp_divider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Air Traffic Range"
+            android:textColor="@color/tp_accent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:paddingBottom="6dp" />
+
+        <!-- Three-column radio row, the same shape Pre-Flight Setup uses for Map Display and the
+             video quality profiles. Ground markers have no equivalent control on purpose: they
+             are sparse and static, so a fixed 5-mile horizon needs no pilot attention. -->
+        <RadioGroup
+            android:id="@+id/arRangeGroup"
+            style="@style/takFormRow"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/arRange25"
+                style="@style/takColumnRadio"
+                android:text="2.5 mi" />
+
+            <RadioButton
+                android:id="@+id/arRange5"
+                style="@style/takColumnRadio"
+                android:text="5 mi" />
+
+            <RadioButton
+                android:id="@+id/arRange15"
+                style="@style/takColumnRadio"
+                android:text="15 mi" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/tp_divider" />
+
+        <!-- Opens the Field Guide at the AR entry. A row in the body rather than a dialog button
+             because all three button slots are already taken (Done / Calibrate FOV / Aim Offsets),
+             and a row can carry the LIVE warning that a button caption could not. -->
+        <TextView
+            android:id="@+id/arFieldGuideLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Field Guide: AR accuracy →"
+            android:textColor="@color/tp_accent"
+            android:textSize="14sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leaves the flight screen. The LIVE video to your team stops until you come back."
+            android:textColor="@color/tp_text_caption"
+            android:textSize="11sp"
+            android:paddingBottom="4dp" />
+
+    </LinearLayout>
+
+</ScrollView>

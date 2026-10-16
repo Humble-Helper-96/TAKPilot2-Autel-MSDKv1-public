@@ -1,0 +1,16 @@
+# Autel SDK and map keys — copy this file to autel-key.properties (repository root) and fill it in.
+#
+# autel-key.properties is GITIGNORED and must stay that way.
+#
+# autelAppKey: the app key that identifies this application to the Autel SDK. Register the
+# applicationId in app/build.gradle (org.takpilot2.autel unless you change it) with Autel's
+# developer programme and paste the key it gives you. Without a valid key the SDK does not
+# connect to the aircraft.
+#
+# amapApiKey / googleMapsApiKey: used only by the map screens inherited from Autel's SDK sample
+# (the mission demos). The TAKPilot2 flight screen uses OpenStreetMap tiles and needs neither.
+# Leave them empty unless you use those screens.
+
+autelAppKey=
+amapApiKey=
+googleMapsApiKey=

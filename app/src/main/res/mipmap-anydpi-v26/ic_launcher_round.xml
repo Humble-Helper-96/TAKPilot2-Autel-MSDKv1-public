@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- API 26+ takes this and ignores the raster mipmaps entirely; the PNGs remain only for the
+     minSdkVersion 21 floor. Both the square and round aliases point at the same two layers —
+     the launcher decides the silhouette, so shipping a separately drawn round variant would
+     just be a second thing to keep in sync. -->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>

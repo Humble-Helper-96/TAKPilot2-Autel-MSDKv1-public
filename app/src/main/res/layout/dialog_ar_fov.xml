@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AR field-of-view calibration (the flight screen's AR calibration). Adjusts live
+     while the overlay is running so the pilot can watch a marker converge onto the real object.
+     Text colours hardcoded — inflated via the Activity's own layoutInflater, not the dialog's,
+     same as dialog_drop_pin.xml. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Put a marker on something you can identify, aim so it sits near the TOP or BOTTOM edge of frame, then adjust until the icon sits on it. Error is invisible at centre and grows outward, so the edge is where this is measured — and the top/bottom edge is the honest one, because the picture is cropped at the sides."
+        android:textColor="@color/tp_text_secondary"
+        android:textSize="12sp"
+        android:paddingBottom="12dp" />
+
+    <LinearLayout style="@style/takFormRow">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Horizontal"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="15sp" />
+        <Button
+            android:id="@+id/arFovHMinus"
+            style="@style/takFovStepButton"
+            android:text="−" />
+        <TextView
+            android:id="@+id/arFovHValue"
+            style="@style/takFovValue" />
+        <Button
+            android:id="@+id/arFovHPlus"
+            style="@style/takFovStepButton"
+            android:text="+" />
+    </LinearLayout>
+
+    <!-- Vertical is DERIVED from the horizontal and the live video aspect, not adjustable. A
+         rectilinear lens couples the two rigidly; letting them be tuned independently produced
+         combinations no real camera can have, which is what this display replaces. -->
+    <LinearLayout style="@style/takFormRow" android:layout_marginTop="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Vertical (derived)"
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/arFovVValue"
+            style="@style/takFovValue" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/arFovHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/tp_accent"
+        android:textSize="12sp" />
+</LinearLayout>

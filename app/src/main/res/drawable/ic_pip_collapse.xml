@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Minimise: the pair of ic_pip_expand with the arrow running from the upper right INTO
+         the small square in the lower-left corner. -->
+    <path
+        android:strokeColor="#99000000" android:strokeWidth="3.2" android:strokeLineJoin="round"
+        android:pathData="M6,4 H18 A2,2 0 0 1 20,6 V18 A2,2 0 0 1 18,20 H11 M4,11 V6 A2,2 0 0 1 6,4 M18,6 L11,13 M11,8.5 V13 H15.5" />
+    <path
+        android:strokeColor="#FFFFFFFF" android:strokeWidth="1.6" android:strokeLineJoin="round" android:strokeLineCap="round"
+        android:pathData="M6,4 H18 A2,2 0 0 1 20,6 V18 A2,2 0 0 1 18,20 H11 M4,11 V6 A2,2 0 0 1 6,4 M18,6 L11,13 M11,8.5 V13 H15.5" />
+    <path android:fillColor="#99000000" android:pathData="M3,13 H10.6 V20.6 H3 Z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M4,14 H10 V20 H4 Z" />
+</vector>

@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tp_bg_screen"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- 0. Memory Card.
+             Styled exactly like sections 1 to 5 — a 22sp heading and takLabelStyle labels
+             (design decision: the compact one-row version fitted but read as a different
+             kind of thing). The room it needs was taken back from the VERTICAL PADDING in
+             takLabelStyle and takFieldStyle instead, which tightens every section evenly.
+
+             ⚠ Sections 0 and 1 TOGETHER must fit the screen without scrolling. Measured on the
+             controller: the scroll viewport is 1264 px. Re-measure after any change here or to
+             those two styles — "Apply Updated Settings to Aircraft" going below the fold is the
+             failure this rule exists to prevent, and it is invisible in the layout editor.
+
+             ⚠ CAPACITY IS NOT SHOWN BECAUSE THE SDK DOES NOT REPORT IT. XT706CameraInfo gives
+             getSDcardFreeSpace() and no total; the whole aar was searched and only free-space
+             getters exist for the SD card (the INTERNAL flash has both, which is what makes the
+             absence look like an oversight rather than a rule). A capacity figure here would
+             have to be inferred, and an inferred number on a pre-flight screen is worse than an
+             absent one. -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0. Memory Card"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="4dp" />
+
+        <!-- gravity=bottom so the columns align on their BOTTOM edge. The Format button is a
+             full-height button and the readouts are one line of text; bottom alignment lets the
+             button grow UPWARD through the space the third column's label would have occupied,
+             instead of hanging below the readouts and reading as a second line. -->
+        <LinearLayout style="@style/takFormRow" android:gravity="bottom">
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Card" />
+                <TextView
+                    android:id="@+id/sdCardState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/tp_text_bright"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Free space" />
+                <TextView
+                    android:id="@+id/sdCardFree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/tp_text_bright"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- NO placeholder label here. The blank label that used to hold this column's
+                 top edge is exactly the space the button now grows into. -->
+            <LinearLayout style="@style/takColumn">
+                <Button
+                    android:id="@+id/sdCardFormatButton"
+                    style="@style/TakButton.Danger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Format Card"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- GONE, not INVISIBLE: an invisible line still holds its height, and the height is
+             exactly what there is no room for. renderSdCard() shows it only when it has text. -->
+        <TextView
+            android:id="@+id/sdCardStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textColor="@color/tp_text_caption"
+            android:textSize="12sp" />
+
+        <!-- Section rule, the same 1dp tp_border with a 20dp lead-in that separates every
+             other section. It costs 42 px of the sections 0+1 height budget; see the note on
+             section 0 and re-measure if either section grows. -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tp_border" />
+
+        <!-- 1. Aircraft Settings.
+             LAID OUT TO FIT ONE SCREEN WITHOUT SCROLLING (design decision), because this is
+             the pre-flight check: a setting the pilot has to scroll to find is a setting that
+             gets skipped. The controller is 1024dp WIDE and only ~720dp tall, so related
+             controls are placed side by side across the width rather than stacked down it, and
+             "Apply Updated Settings to Aircraft" sits last — after every value it sends.
+
+             Helper prose was stripped for the same reason. This is a parameter screen, not a
+             field guide; the labels say what each control is, and only CONSEQUENCE warnings
+             (out-of-range, invalid battery pair, FAA advisory) earn on-screen text. -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Aircraft Settings"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout style="@style/takFormRow">
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Max altitude (ft)" />
+                <EditText
+                    android:id="@+id/limitMaxAltitude"
+                    style="@style/takFieldStyle"
+                    android:hint="e.g. 400"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Max distance (ft)" />
+                <EditText
+                    android:id="@+id/limitMaxRadius"
+                    style="@style/takFieldStyle"
+                    android:hint="e.g. 1600"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="RTH altitude (ft)" />
+                <EditText
+                    android:id="@+id/limitRthAltitude"
+                    style="@style/takFieldStyle"
+                    android:hint="e.g. 100"
+                    android:inputType="number" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Live range check. The aircraft rejects out-of-range values with "The command
+             parameters are out of range" and KEEPS ITS OLD SETTING, which used to happen
+             silently: a pilot once had 50 ft entered here while the aircraft was
+             actually flying a 151 ft RTH. This line reads the aircraft's own accepted range
+             (FlyControllerParameterRangeManager) and says so before takeoff. -->
+        <TextView
+            android:id="@+id/limitRangeStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:paddingTop="4dp" />
+
+        <!-- "If the signal is lost" WAS once a control here, and it must not
+             come back. RETURN TO HOME IS THE ONLY OPTION (design decision). Hover and Land
+             were removed deliberately: this app cannot verify that any of them took.
+             doEmergencyAction() emits MAV_CMD_SET_MSN_EMERGENCY, that write is NOT acknowledged
+             on this firmware (10s timeout on a clean channel), and the SDK exposes no getter to
+             read it back. Offering a picker implied a control we do not have. Flight testing
+             confirmed the aircraft returns home on link loss of its own accord, and the pilot
+             now reads the real state — unknown, check Explorer — on the Enter Flight card. -->
+
+        <!-- Control feel and stick mode, side by side. Both live on the REMOTE CONTROLLER rather
+             than the aircraft and both are read live, so they belong together and neither is
+             saved or pushed at connect.
+
+             Control response: "Normal" is LEARNED from the controller rather than hard-coded —
+             there is no documented default and the pilot may have tuned it in Autel's own app,
+             so a hard-coded number would quietly overwrite their setting.
+
+             Stick mode is READ-ONLY. The SDK names these USA/CHINA/JAPAN and the mapping to
+             "Mode 1/2/3" is convention, not something confirmed on this aircraft. A wrong mode
+             number in front of a pilot swaps throttle and pitch, so the app reports what the
+             controller says and changes nothing. -->
+        <LinearLayout style="@style/takFormRow"
+            android:paddingTop="12dp">
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Control response" />
+                <RadioGroup
+                    android:id="@+id/ratesGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/ratesNormal"
+                        style="@style/takColumnRadio"
+                        android:enabled="false"
+                        android:text="Normal" />
+                    <RadioButton
+                        android:id="@+id/ratesPrecision"
+                        style="@style/takColumnRadio"
+                        android:enabled="false"
+                        android:text="Precision" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Stick mode" />
+                <RadioGroup
+                    android:id="@+id/stickModeGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/stickMode1"
+                        style="@style/takColumnRadio"
+                        android:enabled="false"
+                        android:text="Mode 1" />
+                    <RadioButton
+                        android:id="@+id/stickMode2"
+                        style="@style/takColumnRadio"
+                        android:enabled="false"
+                        android:text="Mode 2" />
+                    <RadioButton
+                        android:id="@+id/stickMode3"
+                        style="@style/takColumnRadio"
+                        android:enabled="false"
+                        android:text="Mode 3" />
+                </RadioGroup>
+                <TextView
+                    android:id="@+id/stickModeStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/tp_text_tertiary"
+                    android:textSize="12sp"
+                    android:paddingTop="4dp"
+                    android:text="" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Obstacle avoidance. DIFFERENT FROM EVERYTHING ELSE ON THIS SCREEN, deliberately.
+             Every other control here stores a value and PUSHES it to the aircraft on connect.
+             This one stores nothing and pushes nothing: it shows the aircraft's live state and
+             changes it only when the pilot touches a switch.
+
+             The reason is that a stale saved checkbox pushing "avoidance off" at connect would
+             disable a safety system without anyone deciding to, and the pilot would have no
+             reason to suspect it. The rest of this screen pushes LIMITS; this is a sensor
+             system, which is a different category of risk.
+
+             The three switches are one row of columns, not three rows: they are read together
+             ("what is the aircraft protecting me from right now") and their labels are short
+             enough that stacking them only cost height. Labels drop the word "obstacle" — the
+             section header above them already supplies it. -->
+        <TextView style="@style/takLabelStyle"
+            android:text="Obstacle avoidance"
+            android:paddingTop="12dp" />
+
+        <TextView
+            android:id="@+id/avoidStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tp_state_unknown"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="The aircraft is not connected." />
+
+        <LinearLayout style="@style/takFormRow"
+            android:paddingTop="2dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <CheckBox
+                    android:id="@+id/avoidSystem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:buttonTint="@color/tp_btn_primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="System"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <CheckBox
+                    android:id="@+id/avoidRth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:buttonTint="@color/tp_btn_primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="During Return to Home"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <CheckBox
+                    android:id="@+id/avoidLanding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:buttonTint="@color/tp_btn_primary" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Landing protection"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- The two battery percentages and their lock, together, directly above Apply.
+             They sit here and not with the numeric limits because they are the last thing a
+             pilot sets before they send the section, and the lock belongs beside what it locks
+             — a lock at the far bottom of the section was a reach away from the fields it
+             governs.
+
+             Three columns. The lock column takes layout_gravity="bottom" so the check box sits
+             level with the two fields: the field columns are taller by one label, and without
+             it the box floats at the top of the row.
+
+             The label is "Lock battery levels" and nothing more. "(fields read-only)" said
+             what a locked check box next to two fields already says.
+
+             The pair are LABELLED AS THE PARAMETERS THEY ARE — Warning and Critical — not as
+             the behaviour they produce (design decision). "Return home at" / "Land at" was
+             a conclusion about what the aircraft does with them, and conclusions drift: the
+             Warning action is deferrable with the RTH button, so calling it "return home at"
+             was already an overstatement. See FlightLimitsController.savedLowBatteryPct. -->
+        <LinearLayout style="@style/takFormRow"
+            android:paddingTop="12dp">
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Battery Warning (%)" />
+                <EditText
+                    android:id="@+id/limitLowBattery"
+                    style="@style/takFieldStyle"
+                    android:hint="e.g. 15"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Battery Critical (%)" />
+                <EditText
+                    android:id="@+id/limitCriticalBattery"
+                    style="@style/takFieldStyle"
+                    android:hint="e.g. 10"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn"
+                android:layout_gravity="bottom">
+                <CheckBox
+                    android:id="@+id/limitBatteryLock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/tp_accent"
+                    android:text="Lock battery levels"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/limitBatteryStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:paddingTop="4dp" />
+
+        <!-- LAST in the section, after every value it sends. Resends everything above and then
+             READS BACK what the aircraft actually holds: editing a field only saves it locally,
+             this is the deliberate act that sends it, and the only thing that reports the
+             aircraft's real state rather than what we asked for. Doubles as recovery — one tap
+             re-asserts everything after a reconnect or an Autel Explorer link steal. -->
+        <Button
+            style="@style/TakButton.Primary"
+            android:id="@+id/limitApplyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Apply Updated Settings to Aircraft" />
+
+        <!-- Fills over the fixed read-back wait (see VERIFY_DELAY_MS / applyAllToAircraft).
+             Determinate, not a spinner: the wait is a known, bounded duration, so showing how
+             much of it remains is what actually reassures a pilot this hasn't frozen. -->
+        <ProgressBar
+            android:id="@+id/limitApplyProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progress="0"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/limitApplyStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:paddingTop="4dp"
+            android:text="Not sent yet." />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tp_border" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Video Streaming"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp" />
+
+        <!-- QUALITY FIRST, above the server configuration. It is the control a pilot reaches
+             for in the air — dropping to Low on a marginal link — and the one setting in this
+             section that is NOT behind the lock, for that reason. Everything below it is set
+             once and then left alone. Putting the thing you touch often above the thing you
+             touch once is the point. -->
+        <TextView style="@style/takLabelStyle" android:text="Video quality (on-device transcode)" />
+        <RadioGroup
+            android:id="@+id/videoProfileGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/videoProfileLow"
+                style="@style/takColumnRadio"
+                android:buttonTint="@color/tp_btn_info"
+                android:textSize="12sp"
+                android:text="Low" />
+
+            <RadioButton
+                android:id="@+id/videoProfileStandard"
+                style="@style/takColumnRadio"
+                android:buttonTint="@color/tp_btn_info"
+                android:textSize="12sp"
+                android:text="Standard" />
+
+            <RadioButton
+                android:id="@+id/videoProfileHigh"
+                style="@style/takColumnRadio"
+                android:buttonTint="@color/tp_btn_info"
+                android:textSize="12sp"
+                android:text="High" />
+
+        </RadioGroup>
+
+        <!-- WHICH SERVER IS LIVE. This and the quality above it are the only video controls
+             that change in the field — a team may fly on an internal media server on one
+             flight and an external one on the next. Everything else about a server is
+             entered one time on the Video Servers screen and then locked.
+
+             The lock stays here because it guards this toggle as well as that screen: this is
+             the video control a pilot is most likely to hit by accident. -->
+        <!-- ⚠ The label carries an id so BASIC can hide it WITH its radio group — INVISIBLE,
+             never GONE, so the lock row does not rise under the quality radios. The ROW below
+             must NOT be hidden: it also holds videoLockConfig, and a hidden row would leave the
+             lock applied and out of reach. See TakConnectActivity.setupVideoControls. -->
+        <TextView
+            android:id="@+id/videoActiveServerLabel"
+            style="@style/takLabelStyle"
+            android:text="Active server" />
+        <LinearLayout style="@style/takFormRow">
+            <RadioGroup
+                android:id="@+id/videoServerGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/videoServer1"
+                    style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info"
+                    android:textSize="12sp"
+                    android:text="Server 1" />
+
+                <RadioButton
+                    android:id="@+id/videoServer2"
+                    style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info"
+                    android:textSize="12sp"
+                    android:text="Server 2" />
+
+            </RadioGroup>
+
+            <LinearLayout style="@style/takColumn">
+                <CheckBox
+                    android:id="@+id/videoLockConfig"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/tp_accent"
+                    android:text="Lock configuration"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Generated, so it always states where the video actually goes and what the team is
+             actually told. It is the whole of the configuration a pilot needs to read before a
+             flight; the rest is on the servers screen. -->
+        <TextView
+            android:id="@+id/videoSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="13sp"
+            android:text="" />
+
+        <Button
+            style="@style/TakButton.Neutral"
+            android:id="@+id/videoConfigureServers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Configure Video Servers…" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tp_border" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3. TAK Server Connection"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp" />
+
+
+
+        <!-- THE SUMMARY. Everything that CONFIGURES the connection moved to
+             TakServerActivity; what stays is what a pilot READS before
+             a flight — who this aircraft is signed in as, and which channels it reaches. All
+             three lines are generated from the live state, so none of them can go stale the
+             way a typed label does. The button is the way in. -->
+        <TextView
+            android:id="@+id/takSummaryStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="13sp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/takSummaryChannels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/takSummaryElevated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:text="" />
+
+        <Button
+            style="@style/TakButton.Neutral"
+            android:id="@+id/takConfigureServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Configure TAK Server…" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tp_border" />
+
+        <!-- 4. Elevation Data (DTED) — imported terrain regions for the local flight area.
+             Feeds TerrainAgl + CameraSlantPoint's terrain-corrected SPoI. -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4. Elevation Data (DTED)"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Improves marker position accuracy. Import one .zip per area; re-importing replaces it."
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+            style="@style/TakButton.Info"
+                android:id="@+id/dtedUploadButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="+ Import Region" />
+            <Button
+            style="@style/TakButton.Neutral"
+                android:id="@+id/dtedCleanButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Clean Unused Tiles"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dtedFileList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/dtedStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="13sp"
+            android:text="" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tp_border" />
+
+        <!-- 5. FAA Airspace Ceilings (UASFM) — downloaded once on wifi, read offline in flight.
+             Advisory display only; nothing here is applied to the aircraft's flight limits. -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5. FAA Airspace Ceilings (UASFM)"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FAA altitude ceilings, shown on the flight screen. Download on wifi before you travel.\n\n⚠ Advice only — NOT an authorisation, and it does not change the aircraft\u2019s altitude limit."
+            android:textColor="@color/tp_text_tertiary"
+            android:textSize="12sp"
+            android:paddingBottom="10dp" />
+
+        <LinearLayout style="@style/takFormRow">
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Centre latitude" />
+                <EditText
+                    android:id="@+id/uasfmLat"
+                    style="@style/takFieldStyle"
+                    android:hint="45.0000"
+                    android:inputType="numberDecimal|numberSigned" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Centre longitude" />
+                <EditText
+                    android:id="@+id/uasfmLon"
+                    style="@style/takFieldStyle"
+                    android:hint="-100.0000"
+                    android:inputType="numberDecimal|numberSigned" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/takColumn">
+                <TextView style="@style/takLabelStyle" android:text="Radius (mi)" />
+                <EditText
+                    android:id="@+id/uasfmRadius"
+                    style="@style/takFieldStyle"
+                    android:hint="50"
+                    android:inputType="number" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <Button
+            style="@style/TakButton.Neutral"
+                android:id="@+id/uasfmUseLocationButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Use My Location"
+                android:textSize="12sp" />
+            <Button
+            style="@style/TakButton.Neutral"
+                android:id="@+id/uasfmCheckButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Check Size"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <Button
+            style="@style/TakButton.Info"
+                android:id="@+id/uasfmDownloadButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Download" />
+            <Button
+            style="@style/TakButton.Danger"
+                android:id="@+id/uasfmClearButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Clear Data"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/uasfmStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="13sp"
+            android:text="" />
+
+        <!-- 6. Application Mode — Elevated or Basic (the stored value of Elevated is ENHANCED;
+             see AppMode.label).
+
+             ⚠ IT IS AT THE BOTTOM ON PURPOSE, AND NOT AT THE TOP. Sections 0 and 1 together
+             must fit the screen without scrolling (see the note on section 0, measured on the
+             controller), so nothing may be inserted above them. This control is also the one a
+             pilot should never reach by accident: it changes WHO RECEIVES THIS AIRCRAFT, and a
+             scroll to the foot of the screen plus a password is the right amount of friction.
+
+             ⚠ There is no check box here. The mode is changed through a BUTTON that asks for
+             the password and discloses the audience change first — a tick would read like the
+             configuration locks beside it, which in Basic take no password at all.
+
+             The rule is tp_border like every other section's: tp_hud_outline is
+             the HUD's black edge and is black on this ground. -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/tp_border" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6. Application Mode"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/appModeSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="13sp"
+            android:text="" />
+
+        <Button
+            style="@style/TakButton.Neutral"
+            android:id="@+id/appModeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:text="Change Mode…" />
+
+    </LinearLayout>
+</ScrollView>

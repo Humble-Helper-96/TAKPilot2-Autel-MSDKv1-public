@@ -1,0 +1,189 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+// Signing comes from keystore.properties at the repository root (git-ignored; see
+// keystore.properties.example). Without it, release builds are unsigned and debug builds use the
+// Android debug key.
+def keystoreProps = new Properties()
+def keystorePropsFile = rootProject.file('keystore.properties')
+if (keystorePropsFile.exists()) {
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
+}
+
+// The Autel SDK app key and the two map keys come from autel-key.properties at the repository root
+// (git-ignored; see autel-key.properties.example). Register your own app key with Autel against
+// this project's applicationId.
+def autelKeyProps = new Properties()
+def autelKeyPropsFile = rootProject.file('autel-key.properties')
+if (autelKeyPropsFile.exists()) {
+    autelKeyPropsFile.withInputStream { autelKeyProps.load(it) }
+}
+
+android {
+    signingConfigs {
+        if (keystorePropsFile.exists()) {
+            config {
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+                storeFile rootProject.file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+            }
+        }
+    }
+    compileSdkVersion 33
+//    buildToolsVersion '28.0.3'
+
+    packagingOptions {
+//        pickFirst 'lib/armeabi-v7a/libwhitename.so'
+//        pickFirst 'lib/arm64-v8a/libwhitename.so'
+//        pickFirst 'lib/armeabi-v7a/libAutelUtil.so'
+//        pickFirst 'lib/arm64-v8a/libAutelUtil.so'
+    }
+    defaultConfig {
+        applicationId "org.takpilot2.autel"
+        minSdkVersion 21
+        targetSdkVersion 29
+        // versionName is real semver: TestApplication reports it as <takv version> on every PLI,
+        // so it is what a TAK server shows for this client. versionCode only orders installs.
+        versionCode 116
+        versionName "2.5.1"
+        multiDexEnabled true
+        if (keystorePropsFile.exists()) {
+            signingConfig signingConfigs.config
+        }
+        buildConfigField "String", "AUTEL_APP_KEY", "\"${autelKeyProps.getProperty('autelAppKey', '')}\""
+        manifestPlaceholders = [
+                AMAP_API_KEY       : autelKeyProps.getProperty('amapApiKey', ''),
+                GOOGLE_MAPS_API_KEY: autelKeyProps.getProperty('googleMapsApiKey', '')
+        ]
+        ndkVersion '21.4.7075529' // ���� NDK �汾
+
+        // Shown on the home screen (under the app name) so a controller in the field can always
+        // be identified precisely. Computed at BUILD time, not install time, so it survives an
+        // `install -r` that keeps the same APK.
+        buildConfigField "String", "BUILD_TIME", "\"${new Date().format('yyyy-MM-dd HH:mm:ss')}\""
+    }
+    buildTypes {
+        release {
+            project.ext.set("archivesBaseName", "TAKPilot2-Autel_" + defaultConfig.versionName)
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            project.ext.set("archivesBaseName", "TAKPilot2-Autel_" + defaultConfig.versionName)
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (keystorePropsFile.exists()) {
+                signingConfig signingConfigs.config
+            }
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    // Unit tests. returnDefaultValues lets pure-logic tests run code that touches
+    // android.util.Log (AppLog forwards there) without a device or a mock framework.
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+    productFlavors {
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+//    mavenCentral()
+//    google()
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Unit tests for the pure-logic core — warnings policy, flight-record formats,
+    // CoT XML, unit conversions. See app/src/test.
+    testImplementation 'junit:junit:4.13.2'
+    //    testCompile 'junit:junit:4.12'
+    //*
+    //implementation project(':sdk')
+
+    // NOT the vendor aar -- a PATCHED copy of it. autel-sdk-release.aar sits beside this one,
+    // pristine and committed, and is still the source of truth; the -xl726 variant is generated
+    // from it by buildsystem/patch-autel-sdk-camera-id.py.
+    //
+    // The patch repoints one camera-model alias (XL719 -> XL726) so this SDK can identify the
+    // EVO II 640T V3's camera at all. Without it the SDK reports CameraProduct.UNKNOWN, hands
+    // back a placeholder UnknownCamera, and EVERY camera command fails. No published Autel SDK
+    // knows XL726 -- all three of their public repos were checked. Full reasoning, the evidence,
+    // and the "genuine XL719 hardware no longer works" caveat are at the top of that script.
+    //
+    // Regenerate after any change to the vendor aar:  python3 buildsystem/patch-autel-sdk-camera-id.py
+    implementation(name: "autel-sdk-release-xl726", ext: "aar")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.20"
+    //noinspection GradleCompatible
+//    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation  'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'com.android.support:multidex:1.0.3'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:recyclerview-v7:25.3.1'
+
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+
+
+    implementation('com.squareup.okhttp3:okhttp:4.7.2')
+
+    // --- TAKPilot2-Autel additions ---
+    // RTSP push client (raw H.264 injection, no re-encode) — era-matched with AGP 7.2/Kotlin 1.7
+    implementation 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtsp:2.2.6'
+    // THE SRT PUSH CLIENT IS NOT A DEPENDENCY. It is VENDORED SOURCE in app/src/main/java/
+    // com/pedro/srt and com/pedro/common, taken from RootEncoder 2.4.7 (Apache 2.0) — see
+    // NOTICE.md.
+    //
+    // It cannot be a dependency. The same author publishes an `srt` module, but every
+    // published version is compiled by Kotlin 1.9 or 2.0, and this project compiles with
+    // Kotlin 1.7.20. A 1.7 compiler refuses to read 1.9 metadata, thus the aar does not
+    // build here. The alternative was to move the whole application to Kotlin 1.9, which is
+    // a large change to a build that flies. The source is 4400 lines, it uses
+    // only the Android SDK and coroutines, and it needed one change to compile (an enum
+    // `.entries` call, a Kotlin 1.9 idiom). Vendoring is the smaller risk.
+    //
+    // Coroutines is a NEW dependency of this application and the vendored SRT code is its
+    // only user. 1.6.4 is the last release that Kotlin 1.7.20 can read.
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    // Flight-map (OSM tiles, offline-cacheable) for TAK markers / drop pins
+    implementation 'org.osmdroid:osmdroid-android:6.1.14'
+    // Imported-DTED region tracking (terrain-corrected SPoI). Room 2.4.3 is a release that
+    // Kotlin 1.7.20 can read.
+    implementation "androidx.room:room-runtime:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
+    // --- Autel SDK transitive dependencies ---
+    // autel-sdk-release.aar is a LOCAL file dependency, so Gradle resolves NOTHING transitively
+    // for it — everything the SDK needs at runtime has to be declared here by hand. These four
+    // were commented out at some point and the app crashed on the FIRST AIRCRAFT CONNECT with
+    // NoClassDefFoundError: io.reactivex.Observable.
+    //
+    // Nothing in the app's own code touches them, and no UI path reaches them, which is why it
+    // ran fine for weeks: the trigger is SDKInitHelper.initProduct -> CameraManager.init, which
+    // only happens once an aircraft is talking to the controller.
+    //
+    // Counts are classes inside the aar referencing each package — measured, not assumed.
+    // Versions are the ones Autel's own sample declared, i.e. what the SDK was built against.
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'          // 829 classes reference it
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'       // 1
+    implementation 'org.greenrobot:eventbus:3.0.0'              // 3
+    // okhttp3 (33) and gson (46) are also referenced and already declared above.
+    //
+    // commons-codec is deliberately NOT declared, despite also being referenced: the aar
+    // SHIPS it in its own internal libs/ (alongside httpclient-4.2.5 and httpcore-4.2.4), so
+    // adding the Maven artifact fails the build with duplicate-class errors. "Referenced by
+    // the aar" and "missing from the build" are different questions — check the aar's libs/
+    // before adding anything here.
+
+    implementation 'com.google.code.gson:gson:2.8.7'
+//    api "androidx.annotation:annotation:1.0.0"
+}
+

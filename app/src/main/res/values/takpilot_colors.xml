@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  TAKPilot2 colour tokens — the single source of truth for the pilot-facing screens.
+
+  WHY. Without this, every colour would be an inline #RRGGBB literal repeated across layouts,
+  styles.xml, and Kotlin, with no shared names. This file names each
+  colour by its ROLE so the same role always uses the same value, and a change is made in one
+  place. Reference these as @color/tp_* from layouts and styles.
+
+  VALUES WERE PRESERVED when the tokens were introduced — that change moved no
+  pixel. A few near-duplicate greys/ambers were folded onto one
+  token per role; those shifts are sub-perceptual (e.g. #AAAAAA→#B0B0B0).
+
+  THREE VALUES WERE LATER CHANGED DELIBERATELY, and those ARE visible: tp_state_caution
+  #FFB300→#FF9800, tp_text_hint #666666→#777777, and the bg_dialog_field stroke #7A7A7A→#9A9A9A.
+  Do not read this file's history as "tokens never change a pixel".
+
+  THE FIELD GUIDE USES TOKENS. It held fifteen Color.parseColor
+  literals, every one already equal to a token's value, so naming them moved no pixel. Six
+  tokens were added to receive them. calloutView now takes @ColorRes, so a hex string does not
+  compile there any more.
+
+  THE FLIGHT-HUD VIEWS USE TOKENS too, and this file has no gap. ArOverlayView, CrosshairView, ObstacleEdgeView, BatteryGaugeView, SignalBarsView,
+  EvSliderView, LiveToggleView, RecordToggleView and AntennaAimView all resolve tokens, and each
+  migrated constant was checked against the value it held before, so nothing was re-tuned.
+
+  ⚠ THE tp_hud_* AND tp_ar_* VALUES ARE FLIGHT-TUNED. They were chosen against live video with
+  the aircraft flying. Roles that share a value today are still separate tokens on purpose — the
+  battery gauge's good band and the accuracy ring's good band are both #4CAF50 and are not the
+  same decision. Change one only with the aircraft in front of you.
+-->
+<resources>
+
+    <!-- Surfaces / backgrounds -->
+    <color name="tp_bg_home">#0E0E10</color>       <!-- home screen root -->
+    <color name="tp_bg_flight">#000000</color>     <!-- flight screen root (under the video) -->
+    <color name="tp_bg_screen">#1A1A1A</color>     <!-- pre-flight / general screen bg, no-video cover -->
+    <color name="tp_bg_data_sync">#0E1116</color>  <!-- data-sync screen bg -->
+    <color name="tp_surface_card">#1A1B1E</color>  <!-- raised card on the home screen -->
+    <color name="tp_surface_field">#2A2A2A</color> <!-- text-input background -->
+    <color name="tp_surface_dialog">#202020</color><!-- dialog background -->
+    <!-- Field Guide surfaces. Added with the literal migration;
+         the guide was already drawing these exact values through Color.parseColor, so naming
+         them moved no pixel. -->
+    <color name="tp_surface_guide">#202024</color>      <!-- field-guide section block -->
+    <color name="tp_surface_guide_code">#101014</color> <!-- field-guide inset/example block -->
+    <color name="tp_surface_guide_note">#14202C</color> <!-- field-guide note callout background -->
+    <color name="tp_surface_guide_warn">#2A1616</color> <!-- field-guide warning callout background -->
+    <color name="tp_border">#333333</color>        <!-- hairline borders / dim separators -->
+    <color name="tp_divider">#33FFFFFF</color>     <!-- translucent-white divider -->
+
+    <!-- Text (a muted-grey scale, brightest first).
+
+         ⚠ ONE NAME, ONE COLOUR. A token name that means different values in two places reads
+         identically in the layouts and renders differently, which no compiler and no code
+         review can catch. -->
+    <color name="tp_text_primary">#FFFFFF</color>
+    <color name="tp_text_bright">#DDDDDD</color>   <!-- slightly dimmed body (debug labels) -->
+    <color name="tp_text_light">#CFCFCF</color>
+    <color name="tp_text_secondary">#B0B0B0</color>
+    <color name="tp_text_tertiary">#909090</color>
+    <color name="tp_text_muted">#9A9A9A</color>    <!-- dim outline / stroke -->
+    <color name="tp_text_hint">#777777</color>     <!-- input hint -->
+    <!-- Hint text inside a DIALOG, lighter than tp_text_hint on purpose: #777777
+         measured too dim against the dialog background on the controller screen. -->
+    <color name="tp_text_hint_dialog">#8A93A0</color>
+    <color name="tp_text_caption">#7A7A7A</color>  <!-- card titles, captions -->
+    <color name="tp_text_disabled">#666666</color> <!-- disabled / placeholder cover -->
+    <!-- Added with the Field Guide literal migration. The guide
+         was already drawing both values through Color.parseColor, so naming them moved no
+         pixel. -->
+    <color name="tp_text_dim">#D8D8D8</color>      <!-- callout body text -->
+    <color name="tp_text_warn">#E8B04B</color>     <!-- amber caution text -->
+    <color name="tp_text_cool">#9AA4B2</color>     <!-- cool-grey secondary (no consumer yet) -->
+
+    <!-- Accent — the one "interactive / link" blue -->
+    <color name="tp_accent">#9AC4FF</color>
+
+    <!-- Button backgrounds (roles, not statuses) -->
+    <color name="tp_btn_primary">#2E7D32</color>      <!-- primary / go (Pre-Flight, Apply) -->
+    <color name="tp_btn_info">#1565C0</color>         <!-- informational (Field Guide); also checkbox tint -->
+    <color name="tp_btn_neutral">#37474F</color>      <!-- neutral secondary -->
+    <color name="tp_btn_danger">#B71C1C</color>       <!-- destructive (Stop/Quit) -->
+    <color name="tp_btn_danger_dialog">#EF5350</color><!-- destructive-confirm dialog highlight -->
+
+    <!-- Status indicators (bright, used for text/dots that report a state) -->
+    <color name="tp_state_go">#4CAF50</color>       <!-- connected / on / accepted -->
+    <color name="tp_state_caution">#FF9800</color>  <!-- caution (was #FFB300) -->
+    <color name="tp_state_danger">#F44336</color>   <!-- off / rejected / danger -->
+    <!-- UNKNOWN IS ITS OWN STATE, not a shade of caution. Expressing "the aircraft has not
+         answered" with the caution colour made "we do not know" and "be careful" look
+         identical. -->
+    <color name="tp_state_unknown">#FFB74D</color>
+    <color name="tp_state_go_soft">#CCFFCC</color>  <!-- pale confirmation text (debug) -->
+
+    <!-- Effects -->
+    <color name="tp_shadow">#CC000000</color>       <!-- HUD text drop-shadow -->
+
+    <!-- The edge every HUD element carries over live video: the
+         readouts, the EV slider and the mini-map's frame. It replaced the translucent panels,
+         which covered the picture the pilot flies from.
+
+         ⚠ FULLY OPAQUE, AND THAT IS THE POINT. tp_shadow above is 80% black and reads as a
+         halo; this has to survive being HALF COVERED by the glyph fill drawn over it, so any
+         transparency here shows as a grey smear rather than a border. See OutlinedTextView.
+
+         One token for all three so the HUD carries one weight and colour of edge. The width
+         is hud_text_outline_width, which is per-device. -->
+    <color name="tp_hud_outline">#FF000000</color>
+
+    <!-- Fill behind a floating CONTROL capsule on the flight screen:
+         the two toolbar clusters and the mini-map's zoom button.
+
+         70% black. A control capsule may be this heavy where the readouts may not: it is a
+         SMALL patch of the picture, not a band across it, and the icons inside it have to hold
+         their own colour rather than take an outline. The readouts went the other way — see
+         tp_hud_outline — because they cover far more of the video.
+
+         ⚠ THE VALUE IS BORROWED FROM TAK AWARE'S overlay-fill (black at 0.7), which teams
+         use alongside this application. Matching it is the point. -->
+    <color name="tp_hud_capsule">#B3000000</color>
+    <!-- Warning-banner severity tints. The banner sits on live video, so these are
+         near-opaque: white text must stay legible over an arbitrary bright scene. -->
+    <color name="tp_warn_banner_red">#E6B71C1C</color>
+    <color name="tp_warn_banner_amber">#E6C15D00</color>
+
+    <!-- FLIGHT-TUNED HUD COLOURS. These were chosen against live video
+         with the aircraft flying. Tokenising them must not re-tune them, and changing one
+         needs the aircraft in front of you.
+
+         Roles that share a value today are still separate tokens on purpose: the battery
+         gauge's good band and the accuracy ring's good band are both #4CAF50 and are not the
+         same decision. -->
+    <color name="tp_hud_accuracy_good">#4CAF50</color>
+    <color name="tp_hud_accuracy_fair">#FFEB3B</color>
+    <color name="tp_hud_accuracy_poor">#F44336</color>
+    <color name="tp_hud_battery_good">#4CAF50</color>
+    <color name="tp_hud_battery_warn">#FFB74D</color>
+    <color name="tp_hud_battery_critical">#F44336</color>
+    <color name="tp_hud_signal_good">#4CAF50</color>
+    <color name="tp_hud_signal_fair">#FFEB3B</color>
+    <color name="tp_hud_signal_poor">#F44336</color>
+    <color name="tp_hud_obstacle_warn">#FFCC00</color>
+    <color name="tp_hud_obstacle_danger">#FF3B30</color>
+    <!-- ⚠ tp_hud_toggle_off AND tp_hud_panel_scrim WERE REMOVED HERE. The first was the flat
+         fill of the LIVE and REC switches and the second was the wash behind the HUD text
+         panels; the pills replaced the switches and the outline replaced the panels, so nothing
+         drew either one. An idle pill takes tp_pill_idle_fill. Do not re-add a scrim to a screen that has no
+         panels. -->
+    <color name="tp_hud_toggle_active">#E53935</color>
+    <color name="tp_hud_toggle_reconnect">#FFB74D</color>
+    <!-- NOT free to re-tune: it matches the magenta the ADS-B gateway tags its own tracks
+         with, so the marker and the gateway's tracks read as the same thing. This token once
+         said #E91E63 while no code used it; the drawn colour was always #FF00FF. -->
+    <color name="tp_ar_aircraft">#FF00FF</color>
+
+    <!-- TOGGLE-PILL FILLS AND STROKES — the AR, IR and exterior-lights buttons in the flight
+         screen's actions capsule, and the Field Guide's picture of them.
+
+         A pill says ON with COLOUR, not with a glyph: the state has to be answerable from
+         across the screen, over a busy picture, without reading a 12sp label's tint.
+
+         The fills are the stroke colour at 30 %. They carry alpha, thus they cannot be written
+         as a reference to the opaque token beside them and are their own tokens. The idle pair
+         is white and belongs to no status.
+
+         ⚠ VALUES UNCHANGED from the literals they replaced (bg_zoom_pill,
+         bg_ar_pill_active). tp_pill_unknown_fill is the only new colour, and it is
+         tp_state_unknown at the same 30 % the others use. -->
+    <color name="tp_pill_idle_fill">#33FFFFFF</color>
+    <color name="tp_pill_idle_stroke">#99FFFFFF</color>
+    <color name="tp_pill_active_fill">#4D4CAF50</color>
+    <color name="tp_pill_unknown_fill">#4DFFB74D</color>
+    <!-- The same 30 % wash for the two pills that report a BROADCAST state rather than a
+         feature: LIVE and REC. They are red and amber instead of green because "the picture is
+         going out to the team" and "the link dropped and we are retrying" are not the same
+         claim as "this feature is enabled". The treatment is identical
+         to the pills beside them; only the hue differs.
+         Washes of tp_hud_toggle_active and tp_hud_toggle_reconnect. -->
+    <color name="tp_pill_live_fill">#4DE53935</color>
+    <color name="tp_pill_sync_fill">#4DFFB74D</color>
+
+    <!-- Emergency Broadcast — the text of the running notice at the top of the flight
+         screen (the pilot-operated override that pushes video to every TAK channel for a bounded
+         window). Deliberately its OWN hue, not a reuse of red (LIVE: "going out to the team"),
+         amber (caution/retrying) or green (connected/on): a distinct, recorded override, not a
+         feature toggle or a connection state, and it must not be mistaken for one at a glance.
+         There is no pill for it, thus no pill wash. -->
+    <color name="tp_state_emergency">#7C4DFF</color>
+
+</resources>

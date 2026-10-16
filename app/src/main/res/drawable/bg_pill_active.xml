@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The ON state of a toggle pill: AR, IR and the exterior lights all use it, and the Field
+     Guide draws its picture of a toggle with it. It was once named bg_ar_pill_active;
+     when the lights button became the third consumer the AR name was simply wrong.
+
+     Status green. The AR overlay is easy to leave running by accident over a busy picture, and
+     the exterior lights are easy to leave ON in daylight, so "is it on" has to be answerable
+     from across the screen rather than by reading a small glyph.
+
+     ⚠ SAME GEOMETRY AS bg_zoom_pill — see that file. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/hud_pill_radius" />
+    <solid android:color="@color/tp_pill_active_fill" />
+    <stroke android:width="@dimen/hud_pill_stroke" android:color="@color/tp_state_go" />
+</shape>

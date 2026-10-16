@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MIL-STD-2525 AIR frame, friendly affiliation.
+     The air frame is the TOP HALF of the ground frame with the bottom OPEN, which is the
+     2525 rule and is what TAK Aware and CloudTAK draw for an air contact. The fill is the
+     same as marker_friendly.xml so the two read as one family on the map.
+     Used for a UAS reported by another TAK client — NOT for ADS-B traffic, which keeps the
+     white aircraft silhouette (ic_air_track). See TakMapMarkers.milAirMarkerRes. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp" android:height="32dp" android:viewportWidth="32" android:viewportHeight="32">
+    <path android:fillColor="#8080E0FF" android:strokeColor="#000000" android:strokeWidth="1.5"
+        android:strokeLineJoin="round"
+        android:pathData="M2,26 V16 A14,14 0 0 1 30,16 V26"/>
+</vector>

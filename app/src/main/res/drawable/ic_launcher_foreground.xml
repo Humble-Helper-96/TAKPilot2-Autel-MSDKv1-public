@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive-icon FOREGROUND layer: the mark itself — a top-down quadcopter with an aiming
+     reticle punched through the middle.
+
+     WHY THIS MARK. It has to survive being 32dp in an app drawer next to Autel Explorer, at a
+     glance, by someone about to fly. The X frame plus four rotor rings reads as "drone" with no
+     text; the reticle says what this app is for, which is aiming at a point and putting a marker
+     on it. Text was rejected outright — it is the first thing to dissolve at small sizes.
+
+     SAFE ZONE. Everything sits inside a radius of 36 from centre (54,54), i.e. the inner 72dp of
+     the 108dp grid. The launcher crops the outer ring and applies parallax, so that boundary is
+     not advisory. The rotors are the binding constraint: centres 18 off each axis land 25.5 from
+     the middle, plus radius 8 and half of the 4-wide stroke gives 35.5.
+
+     Kept in step with buildsystem/make_icon.py, which renders the pre-API-26 raster fallbacks
+     from these exact numbers. Change one, change the other. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Scales the whole mark about the centre. Coordinates below stay on the readable 108
+         grid; only this one number decides how much of the safe circle gets filled.
+
+         0.85 rather than 1.0 because the first build filled the safe zone completely and looked
+         cramped in a real drawer — rotors almost touching the tile edge while every neighbour
+         had margin. The safe zone is the limit, not the target. Mirrored by MARK_SCALE in
+         buildsystem/make_icon.py, which renders the raster fallbacks. -->
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.85"
+        android:scaleY="0.85">
+
+    <!-- X frame. Drawn first; the rotors and the reticle overlay it. -->
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:pathData="M36,36 L72,72" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:pathData="M72,36 L36,72" />
+
+    <!-- Four rotors. Each is a navy disc knocking the arm out of the ring's interior, then the
+         ring itself — the same construction as the reticle below, and for the same reason: an
+         arm terminating inside the ring leaves a blob that reads as noise at small sizes. The
+         disc stops at 6, the stroke's inner edge, so the ring keeps its full weight. -->
+    <path
+        android:fillColor="@color/ic_launcher_navy"
+        android:pathData="M42,36 A6,6 0 1,1 30,36 A6,6 0 1,1 42,36 Z" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="4"
+        android:pathData="M44,36 A8,8 0 1,1 28,36 A8,8 0 1,1 44,36 Z" />
+    <path
+        android:fillColor="@color/ic_launcher_navy"
+        android:pathData="M78,36 A6,6 0 1,1 66,36 A6,6 0 1,1 78,36 Z" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="4"
+        android:pathData="M80,36 A8,8 0 1,1 64,36 A8,8 0 1,1 80,36 Z" />
+    <path
+        android:fillColor="@color/ic_launcher_navy"
+        android:pathData="M42,72 A6,6 0 1,1 30,72 A6,6 0 1,1 42,72 Z" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="4"
+        android:pathData="M44,72 A8,8 0 1,1 28,72 A8,8 0 1,1 44,72 Z" />
+    <path
+        android:fillColor="@color/ic_launcher_navy"
+        android:pathData="M78,72 A6,6 0 1,1 66,72 A6,6 0 1,1 78,72 Z" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="4"
+        android:pathData="M80,72 A8,8 0 1,1 64,72 A8,8 0 1,1 80,72 Z" />
+
+    <!-- Navy disc knocks the frame out from under the reticle, so the ring reads as an aperture
+         rather than a bead sitting on two crossed sticks. -->
+    <path
+        android:fillColor="@color/ic_launcher_navy"
+        android:pathData="M66,54 A12,12 0 1,1 42,54 A12,12 0 1,1 66,54 Z" />
+
+    <!-- Reticle ring, its two ticks, and the centre pip. -->
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="5"
+        android:pathData="M64,54 A10,10 0 1,1 44,54 A10,10 0 1,1 64,54 Z" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M54,35 L54,43" />
+    <path
+        android:strokeColor="@color/ic_launcher_gold"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M54,65 L54,73" />
+    <path
+        android:fillColor="@color/ic_launcher_gold"
+        android:pathData="M56.5,54 A2.5,2.5 0 1,1 51.5,54 A2.5,2.5 0 1,1 56.5,54 Z" />
+    </group>
+</vector>

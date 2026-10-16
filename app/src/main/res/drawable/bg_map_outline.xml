@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Black outline around the flight-screen mini-map.
+
+     WHY: the map sits over live video with no panel behind it, the same as the HUD readouts
+     since the translucent blocks were removed. Its own tiles are pale — a road layer over a
+     light background — so its EDGE disappears against a bright scene exactly as the white text
+     did, and the map stops reading as a distinct instrument.
+
+     WHY THE SAME WEIGHT AS THE TEXT: hud_text_outline_width is the one per-device value the
+     whole HUD uses for its edge, so the map, the readouts and the EV slider carry a single
+     treatment rather than three values that drift apart. See OutlinedTextView.
+
+     ⚠ WIDENING THIS TO CHASE THE LAST OF THE CORNER SEAM WAS TRIED AND REJECTED. A hair of pale map can still be found
+     at a corner under magnification. It is not visible in use, and one HUD edge weight is worth
+     more than a perfect corner. Do not give this frame its own width.
+
+     This is the FOREGROUND of flightMapContainer, not of the map view itself. The container is
+     what toggleMapSize resizes, thus the outline follows the map to its expanded size with no
+     second value to keep in step. A GradientDrawable stroke is inset by half its width inside
+     the bounds, so unlike a Canvas stroke on text it cannot be clipped by the view edge.
+
+     ⚠ THE CORNER MUST MATCH flightMapContainer'S CLIP, AND THAT CLIP IS SET IN CODE.
+     This frame is the container's FOREGROUND — it draws the border but clips nothing, so a
+     rounded border alone would leave square map tiles poking out past it. FlightActivity gives
+     the container a rounded ViewOutlineProvider and clipToOutline.
+
+     ⚠ THAT CLIP IS NOT THIS RADIUS. A stroke is centred on a path inset by half its width, so
+     the OUTER edge this frame presents has radius (hud_pill_radius + stroke/2), which curves
+     away from the corner faster than an 8dp clip does — clipping at the bare 8dp leaves a sliver
+     of map outside the border. FlightActivity clips at (hud_pill_radius + stroke), putting the
+     map's cut edge on the MIDDLE of this stroke so neither anti-aliased edge has to agree with
+     the other to the pixel. It derives that from these same two dimens — change either one here
+     and the clip follows.
+
+     It once carried SQUARE corners, on the reasoning that a square instrument reads
+     as something you look at and a rounded card reads as something you touch. The map now
+     matches the pills and the toolbar instead (design decision), and the hierarchy survives it:
+     hud_pill_radius is the SMALL radius, the same one every pill uses, and the large
+     hud_control_radius still belongs to the toolbar capsules alone. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@android:color/transparent" />
+
+    <corners android:radius="@dimen/hud_pill_radius" />
+
+    <stroke
+        android:width="@dimen/hud_text_outline_width"
+        android:color="@color/tp_hud_outline" />
+</shape>

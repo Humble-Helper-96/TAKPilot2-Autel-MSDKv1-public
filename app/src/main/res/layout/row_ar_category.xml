@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One AR category toggle. Inflated once per ArSettings.Category rather than written out five
+     times, so adding a category can never leave a stale row behind in the menu. -->
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/arCategoryCheck"
+    style="@style/takArCheck" />

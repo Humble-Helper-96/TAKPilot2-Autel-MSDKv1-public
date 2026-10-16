@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Markers list with multi-select (FlightActivity.onMarkersListTapped).
+
+     Replaces an AlertDialog.setAdapter list. That call gives no long-press hook and no room
+     for a check box, which is why the list became a custom view rather than growing a second
+     adapter.
+
+     Scrolls for the same reason dialog_ar_options.xml does: it opens over live video in
+     landscape, and a pilot with a dozen markers must still be able to reach the buttons.
+
+     Delete and Resend live IN THE LAYOUT rather than in the dialog's own button slots, because
+     Close and Clear All already hold the negative and neutral slots and AlertDialog has only
+     three. Being real XML buttons they carry their role styles, which is what specification
+     §6.2 asks for and what a programmatic button could not do without TakUi.kt (which this tree
+     does not have).
+
+     Inflated with a ContextThemeWrapper on TakDialogTheme — §6.3. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <!-- Populated in code from buildMarkerRows(), so the rows and the model cannot drift. -->
+        <LinearLayout
+            android:id="@+id/markersContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/markersEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:text="No markers on this map."
+            android:textColor="@color/tp_text_secondary"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/tp_divider" />
+
+        <!-- Act on the ticked markers. Both are dead until something is ticked. -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="4dp">
+
+            <Button
+                android:id="@+id/markersResendButton"
+                style="@style/TakButton.Primary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:minHeight="48dp"
+                android:text="Resend" />
+
+            <Button
+                android:id="@+id/markersDeleteButton"
+                style="@style/TakButton.Danger"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:text="Delete" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

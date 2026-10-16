@@ -1,0 +1,74 @@
+<resources>
+	<!-- Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+	<dimen name="activity_horizontal_margin">64dp</dimen>
+
+	<!-- Wide-screen flight mini-map. The Autel Smart Controller V3 measures 1024 x 720 dp
+	     (verified over adb), where the 160dp square from values-h440dp is
+	     lost in the empty space either side of the video.
+
+	     Deliberately NOT square. Width drives the whole HUD column (EV slider, EV scale,
+	     exposure readout) and every dp of it is taken from the video, so it only goes to
+	     180dp. Height costs nothing but vertical room, of which there is a lot, so the map
+	     gets 240dp.
+
+	     Height budget re-checked, since the base entry warns that overflow here is SILENT —
+	     the map is the column's last child and simply gets clipped off the bottom. Above the
+	     map is ~233dp, so 240dp needs ~473dp of screen height against the V3's measured
+	     720dp. Comfortable. A hypothetical device wider than 820dp but under ~500dp tall
+	     would clip; no controller in this project's scope is that shape.
+
+	     Smaller hardware (e.g. a Smart Controller SE) does not reach 820dp of width and keeps
+	     the square 160dp from values-h440dp — that bucket must stay usable. -->
+	<dimen name="flight_map_size">180dp</dimen>
+	<dimen name="flight_map_height">240dp</dimen>
+
+	<!-- flight_map_size (180dp here) + flightHudColumn's paddingEnd (14dp) — see the base
+	     entry's comment. It was once hardcoded at the base bucket's
+	     144dp everywhere, ~50dp short of this bucket's real map edge. -->
+	<dimen name="flight_resource_row_margin_end">194dp</dimen>
+
+	<!-- Readout column text (Clock / SPI overlay / gimbal pitch / FAA ceiling / RTH altitude).
+	     12sp is hard to read on the V3's real screen size at
+	     normal viewing distance, even though it reads fine on smaller hardware at the same
+	     dp value (a smaller physical screen puts the same dp closer to the eye). Bumped to
+	     18sp — a clear, deliberate increase, not a rounding nudge. Smaller hardware (Smart
+	     Controller SE, and similar) keeps the base 12sp from values/dimens.xml; this bucket is the V3
+	     specifically, same reasoning as flight_map_size above. -->
+	<dimen name="flight_readout_text_size">18sp</dimen>
+
+	<!-- CrosshairView stroke widths, ~25% heavier than the base bucket's exact-current-appearance
+	     values (see values/dimens.xml's comment): the reticle
+	     reads too fine on the V3's real screen. 3px->3.75px, 1.5px->1.875px, 6px->7.5px. -->
+	<dimen name="crosshair_arm_outline_width">3.75px</dimen>
+	<dimen name="crosshair_arm_line_width">1.875px</dimen>
+	<dimen name="crosshair_ring_width">3.75px</dimen>
+	<dimen name="crosshair_ring_outline_width">7.5px</dimen>
+
+	<!-- Heavier than the base bucket: these readouts are 18sp (36px) here, and an outline
+	     sized for 12sp disappears against a bright scene. 2dp is 4px, about an eighth of the
+	     text size — the stroke is centred, so half of that is covered by the fill. See
+	     OutlinedTextView; going much above this fills the letters in. -->
+	<dimen name="hud_text_outline_width">2dp</dimen>
+
+    <!-- ⚠ BOTH TOOLBAR CAPSULES MUST BE THIS TALL, AND IT IS A MINIMUM, NOT A HEIGHT.
+         The two clusters hold different things, so they measure differently: the ACTIONS
+         capsule's tallest child is the 46dp drop pin and the STATUS capsule's is a 34dp icon.
+         Two capsules that begin on the same line and end on different ones read as a mistake.
+
+         ⚠ IT IS DERIVED, NOT CHOSEN: the actions capsule's natural height, which is the drop
+         pin plus the capsule's own paddingVertical on each side.
+
+             46dp drop pin + 2 x 3dp paddingVertical = 52dp
+
+         A value BELOW that does nothing at all === the actions capsule is already taller, and
+         the status capsule stays short; at 40dp the capsules were not level.
+         If the drop pin or the padding changes, this changes with them.
+
+         A MINIMUM rather than a fixed height because either cluster may still grow: a longer
+         signal readout, a taller button style, a density not yet seen. minHeight can only make
+         a capsule taller, thus it can never clip its own content. -->
+    <dimen name="hud_capsule_height">52dp</dimen>
+
+</resources>

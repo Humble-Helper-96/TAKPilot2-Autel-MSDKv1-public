@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Taller landscape screens (Pixel 8 Pro is ~448dp) can afford the larger mini-map. See
+         the base values/dimens.xml entry for the height budget this number has to fit inside.
+
+         Kept SQUARE and at 160dp on purpose: this is the bucket a smaller controller such as
+         the Smart Controller SE lands in, and it must keep working there. Only values-w820dp
+         — genuinely wide screens like the V3 — goes bigger. -->
+    <dimen name="flight_map_size">160dp</dimen>
+    <dimen name="flight_map_height">160dp</dimen>
+
+    <!-- ⚠ DERIVED FROM flight_map_size, NOT A FREE NUMBER: map width + the HUD column's
+         paddingEnd of 14dp, which is what keeps the resource row's right edge level with the
+         map's left edge.
+
+         Without it the base 144dp stays in force here while the map above grows to 160dp,
+         leaving the row about 30dp short. This is the bucket the Smart Controller SE lands in,
+         which is stated above as one that must keep working. Change the two together, in EVERY
+         bucket that overrides either one. -->
+    <dimen name="flight_resource_row_margin_end">174dp</dimen>
+</resources>

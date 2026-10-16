@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- VIDEO SERVERS — the set-once configuration, kept off Pre-Flight (design decision).
+
+     Pre-Flight keeps only what changes: the video quality, and which server is active. Every
+     other video setting is entered one time and then locked, and putting twenty of them in a
+     column made the sub-sections easy to mix up.
+
+     THE TWO SERVERS ARE SIDE BY SIDE, and that is the point. On Pre-Flight the fields belonged
+     to whichever server the radio above them selected, so nothing on the screen said which one
+     was being edited once the pilot had scrolled into them. Both are visible here and each
+     field writes its own server.
+
+     The LOCK stays on Pre-Flight: it guards the active-server toggle as well as these fields,
+     and unlocking asks for a password. This screen reads it and refuses touches. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tp_bg_screen"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Video Servers"
+                android:textColor="@color/tp_text_primary"
+                android:textSize="22sp" android:textStyle="bold" />
+            <TextView
+                android:id="@+id/vsLockNotice"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/tp_text_secondary" android:textSize="13sp"
+                android:text="Locked in Pre-Flight"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+        <!-- SERVER 1. Identical to the other card apart from the ids; the two are side by
+             side so that "which server am I editing" is never a question. Every field writes
+             its own slot directly — no active-slot binding, which is what made this
+             ambiguous on Pre-Flight.
+             The id is for BASIC: with card 2 GONE this card drops its 10dp end margin, so it
+             really does take the full width (VideoServersActivity.onCreate). -->
+        <LinearLayout
+            android:id="@+id/vs1Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/tp_surface_dialog"
+            android:padding="14dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/vs1Title"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="18sp" android:textStyle="bold"
+                    android:text="Server 1" />
+                <TextView
+                    android:id="@+id/vs1Active"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textColor="@color/tp_state_go"
+                    android:textSize="12sp" android:textStyle="bold"
+                    android:text="ACTIVE"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView style="@style/takLabelStyle" android:text="Name" />
+            <EditText android:id="@+id/vs1Name" style="@style/takFieldStyle"
+                android:hint="Media 1" android:inputType="text" />
+
+            <LinearLayout style="@style/takFormRow">
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Host" />
+                    <EditText android:id="@+id/vs1Host" style="@style/takFieldStyle"
+                        android:hint="stream.example.com" android:inputType="textUri" />
+                </LinearLayout>
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Broadcast ID" />
+                    <EditText android:id="@+id/vs1StreamId" style="@style/takFieldStyle"
+                        android:hint="UAS-CALLSIGN" android:inputType="text" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- The random token makes the stream name unguessable, so only a client holding
+                 the current CoT can open the feed. The token is made once per application
+                 launch and is never stored — see StreamPath. -->
+            <CheckBox android:id="@+id/vs1RandomPath"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:buttonTint="@color/tp_btn_info"
+                android:textColor="@color/tp_text_primary" android:textSize="13sp"
+                android:text="Randomize stream path (new token each app launch)" />
+            <TextView
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingStart="32dp" android:paddingEnd="0dp"
+                android:text="The path gets a random token that changes each time the app is launched. It stays the same for the whole session."
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <TextView style="@style/takLabelStyle" android:text="Stream path (touch to copy)" android:paddingTop="6dp" />
+            <TextView android:id="@+id/vs1StreamPath"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@color/tp_bg_screen"
+                android:padding="8dp"
+                android:textColor="@color/tp_state_go" android:textSize="12sp"
+                android:textIsSelectable="true" android:fontFamily="monospace"
+                android:text="…" />
+
+            <LinearLayout style="@style/takFormRow">
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Username" />
+                    <EditText android:id="@+id/vs1User" style="@style/takFieldStyle"
+                        android:inputType="text" />
+                </LinearLayout>
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Server password" />
+                    <EditText android:id="@+id/vs1Pass" style="@style/takFieldStyle"
+                        android:inputType="textPassword" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView style="@style/takLabelStyle" android:text="Encoding" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs1CodecGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs1CodecH264" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="H.264" />
+                <RadioButton android:id="@+id/vs1CodecH265" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="H.265" />
+            </RadioGroup>
+            <TextView android:id="@+id/vs1CodecHint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <!-- ⚠ A 1dp tp_border RULE BEFORE EACH SECTION (design decision). The card
+                 is three short control sections and two addresses, and read quickly they ran
+                 together. Five rules per card and no more: a rule between every pair of views
+                 reads as over-ruled rather than grouped. -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <!-- WHICH SERVER THE CoT NAMES — first, because it decides whether anything
+                 below about the read leg matters at all. "Other" takes the OTHER card's host,
+                 login, read protocol and read port; "Off" puts no video block in the CoT. -->
+            <TextView style="@style/takLabelStyle" android:text="TAK Advertisement Server" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs1AdvGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs1AdvSelf" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="This server" />
+                <RadioButton android:id="@+id/vs1AdvOther" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="Other" />
+                <RadioButton android:id="@+id/vs1AdvOff" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="Off" />
+            </RadioGroup>
+            <!-- ⚠ NO "The CoT carries host:port" LINE HERE (design decision). It would restate,
+                 less precisely, what the TAK Advertisement Address below shows in full — and a
+                 card that says the same thing twice in two shapes blurs together when read
+                 quickly. -->
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="Video Publish Protocol" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs1TransportGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs1TransportRtsp" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="RTSP" />
+                <RadioButton android:id="@+id/vs1TransportSrt" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="SRT" />
+            </RadioGroup>
+            <TextView android:id="@+id/vs1TransportHint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <!-- ⚠ This is the PUBLISH protocol's RTSP port, and it is also the default READ
+                 port — so it is in use while SRT is selected for the publish. Its field is
+                 hidden then; toggle back to RTSP to change it. The read leg has its own
+                 protocol and its own SRT port under "TAK Advertisement Protocol" below. -->
+            <LinearLayout android:id="@+id/vs1RtspBlock"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView style="@style/takLabelStyle" android:text="RTSP port" />
+                <EditText android:id="@+id/vs1RtspPort" style="@style/takFieldStyle"
+                    android:text="8554" android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/vs1SrtBlock"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:visibility="gone">
+                <LinearLayout style="@style/takFormRow">
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="SRT port" />
+                        <EditText android:id="@+id/vs1SrtPort" style="@style/takFieldStyle"
+                            android:text="8890" android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="SRT passphrase" />
+                        <EditText android:id="@+id/vs1Passphrase" style="@style/takFieldStyle"
+                            android:inputType="textPassword" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:text="The passphrase encrypts the stream. It is not the server password. Leave it empty if the server has no passphrase. 10 to 79 characters."
+                    android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+            </LinearLayout>
+
+
+            <!-- HOW THE TEAM READS IT, which is a different leg from the push above. RTSP is
+                 the default and must stay it: ATAK plays an SRT read, TAK Aware cannot, and an
+                 address a viewer fails to open reads as a dead feed. -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="TAK Advertisement Protocol" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs1AdvProtoGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs1AdvProtoRtsp" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="RTSP" />
+                <RadioButton android:id="@+id/vs1AdvProtoSrt" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="SRT" />
+            </RadioGroup>
+            <TextView android:id="@+id/vs1AdvProtoHint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <!-- ⚠ THE READ PORT AND THE READ PASSPHRASE ARE NOT THE PUBLISH ONES. MediaMTX
+                 holds srtReadPassphrase and srtPublishPassphrase separately, and crossing them
+                 looks exactly like wrong credentials. -->
+            <LinearLayout android:id="@+id/vs1AdvSrtBlock"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:visibility="gone">
+                <LinearLayout style="@style/takFormRow">
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="Read SRT port" />
+                        <EditText android:id="@+id/vs1AdvSrtPort" style="@style/takFieldStyle"
+                            android:text="8890" android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="Read passphrase" />
+                        <EditText android:id="@+id/vs1AdvPassphrase" style="@style/takFieldStyle"
+                            android:inputType="textPassword" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:text="The server's READ passphrase, which is not always the publish one. Leave it empty if the read path has none."
+                    android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- PUBLISH FIRST, THEN ADVERTISE — the card reads in the order the video
+                 travels: out of the controller, then out to the team. -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="Publish Address" android:paddingTop="8dp" />
+            <TextView android:id="@+id/vs1PushUrl"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@color/tp_bg_screen"
+                android:padding="8dp"
+                android:textColor="@color/tp_state_go" android:textSize="12sp"
+                android:textIsSelectable="true" android:fontFamily="monospace"
+                android:text="rtsp://…" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="TAK Advertisement Address" android:paddingTop="8dp" />
+            <TextView android:id="@+id/vs1AdvUrl"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@color/tp_bg_screen"
+                android:padding="8dp"
+                android:textColor="@color/tp_state_go" android:textSize="12sp"
+                android:textIsSelectable="true" android:fontFamily="monospace"
+                android:text="rtsp://…" />
+        </LinearLayout>
+
+        <!-- SERVER 2. Identical to the other card apart from the ids; the two are side by
+             side so that "which server am I editing" is never a question. Every field writes
+             its own slot directly — no active-slot binding, which is what made this
+             ambiguous on Pre-Flight.
+             ⚠ BASIC hides this card by its id (AppMode.secondVideoServerAllowed) — and card 1's
+             vs1AdvOther radio with it, the second door to this server. GONE, not INVISIBLE: the
+             two cards are weight-1 siblings, so card 1 takes the full width. -->
+        <LinearLayout
+            android:id="@+id/vs2Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@color/tp_surface_dialog"
+            android:padding="14dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/vs2Title"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/tp_text_primary"
+                    android:textSize="18sp" android:textStyle="bold"
+                    android:text="Server 2" />
+                <TextView
+                    android:id="@+id/vs2Active"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:textColor="@color/tp_state_go"
+                    android:textSize="12sp" android:textStyle="bold"
+                    android:text="ACTIVE"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView style="@style/takLabelStyle" android:text="Name" />
+            <EditText android:id="@+id/vs2Name" style="@style/takFieldStyle"
+                android:hint="Media 2" android:inputType="text" />
+
+            <LinearLayout style="@style/takFormRow">
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Host" />
+                    <EditText android:id="@+id/vs2Host" style="@style/takFieldStyle"
+                        android:hint="stream.example.com" android:inputType="textUri" />
+                </LinearLayout>
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Broadcast ID" />
+                    <EditText android:id="@+id/vs2StreamId" style="@style/takFieldStyle"
+                        android:hint="UAS-CALLSIGN" android:inputType="text" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- The random token makes the stream name unguessable, so only a client holding
+                 the current CoT can open the feed. The token is made once per application
+                 launch and is never stored — see StreamPath. -->
+            <CheckBox android:id="@+id/vs2RandomPath"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:buttonTint="@color/tp_btn_info"
+                android:textColor="@color/tp_text_primary" android:textSize="13sp"
+                android:text="Randomize stream path (new token each app launch)" />
+            <TextView
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingStart="32dp" android:paddingEnd="0dp"
+                android:text="The path gets a random token that changes each time the app is launched. It stays the same for the whole session."
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <TextView style="@style/takLabelStyle" android:text="Stream path (touch to copy)" android:paddingTop="6dp" />
+            <TextView android:id="@+id/vs2StreamPath"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@color/tp_bg_screen"
+                android:padding="8dp"
+                android:textColor="@color/tp_state_go" android:textSize="12sp"
+                android:textIsSelectable="true" android:fontFamily="monospace"
+                android:text="…" />
+
+            <LinearLayout style="@style/takFormRow">
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Username" />
+                    <EditText android:id="@+id/vs2User" style="@style/takFieldStyle"
+                        android:inputType="text" />
+                </LinearLayout>
+                <LinearLayout style="@style/takColumn">
+                    <TextView style="@style/takLabelStyle" android:text="Server password" />
+                    <EditText android:id="@+id/vs2Pass" style="@style/takFieldStyle"
+                        android:inputType="textPassword" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView style="@style/takLabelStyle" android:text="Encoding" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs2CodecGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs2CodecH264" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="H.264" />
+                <RadioButton android:id="@+id/vs2CodecH265" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="H.265" />
+            </RadioGroup>
+            <TextView android:id="@+id/vs2CodecHint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <!-- WHICH SERVER THE CoT NAMES — first, because it decides whether anything
+                 below about the read leg matters at all. "Other" takes the OTHER card's host,
+                 login, read protocol and read port; "Off" puts no video block in the CoT. -->
+            <TextView style="@style/takLabelStyle" android:text="TAK Advertisement Server" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs2AdvGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs2AdvSelf" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="This server" />
+                <RadioButton android:id="@+id/vs2AdvOther" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="Other" />
+                <RadioButton android:id="@+id/vs2AdvOff" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="Off" />
+            </RadioGroup>
+            <!-- ⚠ NO "The CoT carries host:port" LINE HERE (design decision). It would restate,
+                 less precisely, what the TAK Advertisement Address below shows in full — and a
+                 card that says the same thing twice in two shapes blurs together when read
+                 quickly. -->
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="Video Publish Protocol" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs2TransportGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs2TransportRtsp" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="RTSP" />
+                <RadioButton android:id="@+id/vs2TransportSrt" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="SRT" />
+            </RadioGroup>
+            <TextView android:id="@+id/vs2TransportHint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <!-- ⚠ This is the PUBLISH protocol's RTSP port, and it is also the default READ
+                 port — so it is in use while SRT is selected for the publish. Its field is
+                 hidden then; toggle back to RTSP to change it. The read leg has its own
+                 protocol and its own SRT port under "TAK Advertisement Protocol" below. -->
+            <LinearLayout android:id="@+id/vs2RtspBlock"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView style="@style/takLabelStyle" android:text="RTSP port" />
+                <EditText android:id="@+id/vs2RtspPort" style="@style/takFieldStyle"
+                    android:text="8554" android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/vs2SrtBlock"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:visibility="gone">
+                <LinearLayout style="@style/takFormRow">
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="SRT port" />
+                        <EditText android:id="@+id/vs2SrtPort" style="@style/takFieldStyle"
+                            android:text="8890" android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="SRT passphrase" />
+                        <EditText android:id="@+id/vs2Passphrase" style="@style/takFieldStyle"
+                            android:inputType="textPassword" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:text="The passphrase encrypts the stream. It is not the server password. Leave it empty if the server has no passphrase. 10 to 79 characters."
+                    android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+            </LinearLayout>
+
+
+            <!-- HOW THE TEAM READS IT, which is a different leg from the push above. RTSP is
+                 the default and must stay it: ATAK plays an SRT read, TAK Aware cannot, and an
+                 address a viewer fails to open reads as a dead feed. -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="TAK Advertisement Protocol" android:paddingTop="8dp" />
+            <RadioGroup android:id="@+id/vs2AdvProtoGroup"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/vs2AdvProtoRtsp" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="RTSP" />
+                <RadioButton android:id="@+id/vs2AdvProtoSrt" style="@style/takColumnRadio"
+                    android:buttonTint="@color/tp_btn_info" android:textSize="12sp" android:text="SRT" />
+            </RadioGroup>
+            <TextView android:id="@+id/vs2AdvProtoHint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+
+            <!-- ⚠ THE READ PORT AND THE READ PASSPHRASE ARE NOT THE PUBLISH ONES. MediaMTX
+                 holds srtReadPassphrase and srtPublishPassphrase separately, and crossing them
+                 looks exactly like wrong credentials. -->
+            <LinearLayout android:id="@+id/vs2AdvSrtBlock"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:visibility="gone">
+                <LinearLayout style="@style/takFormRow">
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="Read SRT port" />
+                        <EditText android:id="@+id/vs2AdvSrtPort" style="@style/takFieldStyle"
+                            android:text="8890" android:inputType="number" />
+                    </LinearLayout>
+                    <LinearLayout style="@style/takColumn">
+                        <TextView style="@style/takLabelStyle" android:text="Read passphrase" />
+                        <EditText android:id="@+id/vs2AdvPassphrase" style="@style/takFieldStyle"
+                            android:inputType="textPassword" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingTop="2dp"
+                    android:text="The server's READ passphrase, which is not always the publish one. Leave it empty if the read path has none."
+                    android:textColor="@color/tp_text_secondary" android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- PUBLISH FIRST, THEN ADVERTISE — the card reads in the order the video
+                 travels: out of the controller, then out to the team. -->
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="Publish Address" android:paddingTop="8dp" />
+            <TextView android:id="@+id/vs2PushUrl"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@color/tp_bg_screen"
+                android:padding="8dp"
+                android:textColor="@color/tp_state_go" android:textSize="12sp"
+                android:textIsSelectable="true" android:fontFamily="monospace"
+                android:text="rtsp://…" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:layout_marginTop="14dp" android:background="@color/tp_border" />
+            <TextView style="@style/takLabelStyle" android:text="TAK Advertisement Address" android:paddingTop="8dp" />
+            <TextView android:id="@+id/vs2AdvUrl"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@color/tp_bg_screen"
+                android:padding="8dp"
+                android:textColor="@color/tp_state_go" android:textSize="12sp"
+                android:textIsSelectable="true" android:fontFamily="monospace"
+                android:text="rtsp://…" />
+        </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

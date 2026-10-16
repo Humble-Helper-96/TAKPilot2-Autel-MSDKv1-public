@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pilot Field Guide. Deliberately just a scroll container: every section is built in
+     FieldGuideActivity so the icon examples can be REAL toolbar views (BatteryGaugeView,
+     SignalBarsView, LiveToggleView, the TAK badge with its status dot...) driven into the
+     states being described, rather than hand-drawn mock-ups that would quietly go stale the
+     next time an icon changes. Styling matches the Pre-Flight Setup screen. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fieldGuideScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A1A1A"
+    android:fillViewport="true">
+
+    <!-- blocksDescendants: several of the icon examples are real toolbar widgets that are
+         focusable in their normal home, and on open the ScrollView would jump down to the first
+         one of them instead of starting at the top of the guide. -->
+    <LinearLayout
+        android:id="@+id/fieldGuideContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical"
+        android:padding="24dp" />
+</ScrollView>

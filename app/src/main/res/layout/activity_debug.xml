@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/tp_bg_home"
+    android:padding="20dp"
+    android:baselineAligned="false">
+
+    <!-- LEFT: options column -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.3"
+        android:paddingEnd="20dp"
+        android:scrollbars="none"
+        android:fillViewport="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Debug Log"
+            android:textColor="@color/tp_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <LinearLayout style="@style/homeCard">
+            <TextView style="@style/homeCardTitle" android:text="Options" />
+
+            <!-- The WHOLE ROW is the target: a switch invites a tap on its words, and a tap on
+                 the label alone would do nothing. Same for the three option rows below. -->
+            <LinearLayout
+                android:id="@+id/debugLoggingRow"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingTop="6dp">
+                <!-- A SWITCH, not a check box: this is the one control
+                     on the screen that starts and stops something — the file sink refuses every
+                     line the moment it is off, and the setter flushes and closes the file. The
+                     three options below are greyed while it is off. -->
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/debugLoggingToggle"
+                    android:layout_width="wrap_content" android:layout_height="48dp"
+                    android:layout_marginEnd="10dp" android:clickable="false" android:focusable="false"
+                    app:thumbTint="@color/tp_btn_info" app:trackTint="@color/tp_pill_idle_stroke" />
+                <TextView android:id="@+id/debugLoggingLabel"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Logging Enabled" android:textColor="@color/tp_text_bright" android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- The three rows below are OPTIONS OF the log: indented
+                 under the switch, and greyed while it is off, because none of them does
+                 anything without it. -->
+
+            <LinearLayout
+                android:id="@+id/debugTakRow"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingTop="4dp" android:paddingStart="28dp">
+                <CheckBox android:id="@+id/debugTakToggle" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:buttonTint="@color/tp_btn_info"
+                    android:clickable="false" android:focusable="false" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Include TAK / CoT logs" android:textColor="@color/tp_text_bright" android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/debugRadarRow"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingTop="4dp" android:paddingStart="28dp">
+                <CheckBox android:id="@+id/debugRadarToggle" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:buttonTint="@color/tp_btn_info"
+                    android:clickable="false" android:focusable="false" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Include obstacle radar logs" android:textColor="@color/tp_text_bright" android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/debugResourceMonitorRow"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingTop="4dp" android:paddingStart="28dp">
+                <CheckBox android:id="@+id/debugResourceMonitorToggle" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:buttonTint="@color/tp_btn_info"
+                    android:clickable="false" android:focusable="false" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Show system resources on flight screen" android:textColor="@color/tp_text_bright" android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- The Autel Explorer watchdog has no control and no text here. It is always on
+                 — see ExplorerWatchdog. -->
+
+            <!-- SRT LATENCY. Deliberately here and not on Pre-Flight:
+                 the right value is a property of the NETWORK a pilot is on, not a flight
+                 decision, and it is set once by whoever knows the RTT to the server.
+
+                 It is on a screen at all, rather than a constant, because 500 ms is a starting
+                 point from ONE ground test. Field experience must be actionable without
+                 pushing a build to aircraft that are flying. -->
+            <TextView
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:text="SRT video latency" android:textColor="@color/tp_text_primary"
+                android:textSize="16sp" android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:paddingTop="4dp">
+                <EditText
+                    android:id="@+id/debugSrtLatency"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"
+                    android:textColor="@color/tp_text_bright"
+                    android:textSize="15sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="milliseconds" android:textColor="@color/tp_text_bright"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/debugSrtLatencyStatus"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingStart="8dp" android:paddingTop="2dp"
+                android:textColor="@color/tp_text_caption" android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingStart="8dp" android:paddingTop="4dp"
+                android:text="How long SRT has to recover a lost packet, and the delay it adds. Use three to four times the round-trip time to your video server. RTSP does not use this value."
+                android:textColor="@color/tp_text_caption" android:textSize="12sp" />
+
+            <!-- No RF power probe here: the region is an Autel limit, so neither a probe nor a
+                 connect-time write is offered. -->
+            <!-- No "Export Log" button: every log is already written to
+                 Downloads/TAKPilot2 Logs as it is produced, so the button would offer a second
+                 route to a file the pilot already has. -->
+            <Button
+            style="@style/TakButton.Neutral"
+                android:id="@+id/debugClearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Clear Log" />
+            <Button
+            style="@style/TakButton.Danger"
+                android:id="@+id/debugDeleteButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Delete Log" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/debugLogMeta"
+            style="@style/homeCardSub"
+            android:layout_marginTop="10dp"
+            android:text="" />
+
+        <TextView
+            style="@style/homeCardSub"
+            android:layout_marginTop="4dp"
+            android:text="Also archived to Downloads/TAKPilot2 Logs" />
+
+    </LinearLayout>
+    </ScrollView>
+
+    <!-- RIGHT: live-scrolling log view -->
+    <ScrollView
+        android:id="@+id/debugLogScroll"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.4"
+        android:background="@color/tp_surface_card"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/debugLogText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/tp_state_go_soft"
+            android:textSize="12sp"
+            android:textIsSelectable="true"
+            android:text="" />
+    </ScrollView>
+</LinearLayout>

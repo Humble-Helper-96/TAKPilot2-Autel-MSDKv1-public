@@ -1,0 +1,726 @@
+<resources>
+	<!-- Default screen margins, per the Android Design guidelines. -->
+	<dimen name="activity_horizontal_margin">16dp</dimen>
+	<dimen name="activity_vertical_margin">16dp</dimen>
+	<dimen name="text_padding">5dp</dimen>
+	<dimen name="item_margin_bottom">10dp</dimen>
+	<dimen name="item_margin_top">10dp</dimen>
+	<dimen name="log_text_min_height">35dp</dimen>
+	<dimen name="text_height">30dp</dimen>
+
+	<dimen name="text_view_size_sp_6">6sp</dimen>
+	<dimen name="text_view_size_sp_8">8sp</dimen>
+	<dimen name="text_view_size_sp_10">10sp</dimen>
+	<dimen name="text_view_size_sp_12">12sp</dimen>
+	<dimen name="text_view_size_sp_14">14sp</dimen>
+	<dimen name="text_view_size_sp_16">16sp</dimen>
+	<dimen name="text_view_size_sp_18">18sp</dimen>
+
+	<dimen name="common_2dp">2dp</dimen>
+	<dimen name="common_5dp">5dp</dimen>
+	<dimen name="common_7dp">7dp</dimen>
+	<dimen name="common_10dp">10dp</dimen>
+	<dimen name="common_16dp">16dp</dimen>
+	<dimen name="common_20dp">20dp</dimen>
+	<dimen name="common_24dp">24dp</dimen>
+	<dimen name="common_25dp">25dp</dimen>
+	<dimen name="common_36dp">36dp</dimen>
+	<dimen name="common_43dp">43dp</dimen>
+	<dimen name="common_48dp">48dp</dimen>
+	<dimen name="common_60dp">60dp</dimen>
+	<dimen name="common_80dp">80dp</dimen>
+	<dimen name="common_100dp">100dp</dimen>
+	<dimen name="common_150dp">150dp</dimen>
+
+	<dimen name="autel_dialog_notification_height">106.6dp</dimen>
+
+	<!--arch angle-->
+	<dimen name="autel_arch_angle_width">53.3dp</dimen>
+	<dimen name="autel_arch_angle_height">43.3dp</dimen>
+	<dimen name="autel_arch_angle_image_width">21.6dp</dimen>
+	<dimen name="autel_arch_angle_image_height">28.3dp</dimen>
+	<dimen name="autel_arch_angle_image_margin_left">5dp</dimen>
+	<dimen name="autel_arch_angle_text_margin_right">6.6dp</dimen>
+	<dimen name="autel_arch_angle_text_margin_top">6.6dp</dimen>
+	<dimen name="autel_arch_angle_text_size">13.3sp</dimen>
+	<dimen name="autel_arch_angle_rotate_translate_height">9.7dp</dimen>
+	<dimen name="autel_arch_angle_rotate_translate_width">0.7dp</dimen>
+	<dimen name="autel_arch_angle_indicator_width">10.3dp</dimen>
+	<dimen name="autel_arch_angle_indicator_height">4.7dp</dimen>
+
+	<!--autel home-->
+	<dimen name="autel_home_start_text_width">280dp</dimen>
+	<dimen name="autel_home_start_text_height">54dp</dimen>
+	<dimen name="autel_home_start_text_bottom">68.6dp</dimen>
+	<dimen name="autel_home_text_corner">25dp</dimen>
+	<dimen name="autel_home_user_icon_corner">24dp</dimen>
+	<dimen name="autel_home_start_text_stroke_width">1dp</dimen>
+	<dimen name="autel_home_start_text_size">25.6sp</dimen>
+	<dimen name="autel_home_logo_width">182dp</dimen>
+	<dimen name="autel_home_logo_height">53dp</dimen>
+	<dimen name="autel_home_logo_margin_top">21dp</dimen>
+	<dimen name="autel_home_logo_margin_left">24.7dp</dimen>
+	<dimen name="autel_home_indicate_width">146.7dp</dimen>
+	<dimen name="autel_home_indicate_height">21.7dp</dimen>
+	<dimen name="autel_home_indicate_text_size">20sp</dimen>
+	<dimen name="autel_home_indicate_margin_right">21.3dp</dimen>
+	<dimen name="autel_home_user_icon_width">48.7dp</dimen>
+	<dimen name="autel_home_user_icon_center_width">18dp</dimen>
+	<dimen name="autel_home_user_icon_margin_top">10dp</dimen>
+	<dimen name="autel_home_user_icon_margin_right">24.7dp</dimen>
+	<dimen name="autel_home_indicate_margin_bottom">23dp</dimen>
+	<dimen name="home_connect_battery_width">17.7dp</dimen>
+	<dimen name="home_connect_battery_tv_margin_right">4dp</dimen>
+	<dimen name="home_connect_tv_size">16sp</dimen>
+	<dimen name="home_connect_battery_height">14dp</dimen>
+	<dimen name="home_connect_controller_width">14.7dp</dimen>
+	<dimen name="home_connect_controller_height">13dp</dimen>
+	<dimen name="home_connect_battery_margin_right">70dp</dimen>
+	<dimen name="home_connect_status_width">130dp</dimen>
+	<dimen name="home_connect_status_height">17dp</dimen>
+	<dimen name="home_connect_battery_rect_left">6.8dp</dimen>
+	<dimen name="home_connect_battery_rect_top">2.7dp</dimen>
+	<dimen name="home_connect_battery_rect_right">7.1dp</dimen>
+	<dimen name="home_connect_battery_rect_bottom">1.6dp</dimen>
+	<dimen name="home_connect_battery_rect_height">9.2dp</dimen>
+	<dimen name="home_connect_battery_margin_top">2dp</dimen>
+	<dimen name="home_connect_controller_margin_top">2.5dp</dimen>
+	<dimen name="home_connect_controller_rect_left">9.1dp</dimen>
+	<dimen name="home_connect_controller_rect_right">1.3dp</dimen>
+	<dimen name="home_connect_controller_rect_bottom">1.3dp</dimen>
+	<dimen name="home_connect_controller_rect_height">9.2dp</dimen>
+	<dimen name="home_time_tv_size">14sp</dimen>
+	<dimen name="home_weather_view_left">22dp</dimen>
+	<dimen name="home_weather_view_height">106dp</dimen>
+	<dimen name="home_weather_view_margin_top">13dp</dimen>
+	<dimen name="home_weather_view_status_height">42dp</dimen>
+	<dimen name="home_weather_view_status_margin_bottom">11dp</dimen>
+	<dimen name="home_weather_status_margin_top">14dp</dimen>
+	<dimen name="home_weather_status_margin_bottom">4dp</dimen>
+	<dimen name="home_weather_status_icon_width">17dp</dimen>
+	<dimen name="home_weather_tv_margin_left">10dp</dimen>
+	<dimen name="home_recyclerview_item_tv_size">11.3sp</dimen>
+	<dimen name="home_activity_weather_view_width">130dp</dimen>
+	<dimen name="home_activity_weather_view_height">190dp</dimen>
+	<dimen name="home_activity_weather_bg_width">202dp</dimen>
+	<dimen name="home_activity_weather_bg_height">319dp</dimen>
+	<dimen name="weather_item_height">23dp</dimen>
+	<dimen name="home_weather_status_text_margin_top">1dp</dimen>
+	<dimen name="home_user_icon_padding">2dp</dimen>
+	<dimen name="autel_Logo_width">214.6dp</dimen>
+	<dimen name="autel_Logo_height">71.6dp</dimen>
+	<dimen name="autel_Logo_text_size">10sp</dimen>
+	<dimen name="autel_Logo_text_bottom">38.6dp</dimen>
+
+	<!--Aircraft Fly Control Header-->
+	<dimen name="aircraft_header_setting_right_width">80.7dp</dimen>
+	<dimen name="aircraft_header_setting_right_height">42dp</dimen>
+	<dimen name="aircraft_header_params_text_size">17sp</dimen>
+	<dimen name="aircraft_header_mode_text_size">17.3sp</dimen>
+	<dimen name="aircraft_header_unit_text_size">10.3sp</dimen>
+	<dimen name="aircraft_header_unit_padding_top">2dp</dimen>
+	<dimen name="aircraft_header_params_text_divider">2dp</dimen>
+	<dimen name="aircraft_header_icon_param_space">4.7dp</dimen>
+	<dimen name="header_image_setting_width">20dp</dimen>
+	<dimen name="header_image_speed_width">15.7dp</dimen>
+	<dimen name="header_image_speed_height">13dp</dimen>
+	<dimen name="header_image_altitude_width">12.4dp</dimen>
+	<dimen name="header_image_altitude_height">14.4dp</dimen>
+	<dimen name="header_image_distance_width">15dp</dimen>
+	<dimen name="header_image_distance_height">12.4dp</dimen>
+	<dimen name="header_image_battery_width">19.7dp</dimen>
+	<dimen name="header_image_battery_height">9.7dp</dimen>
+	<dimen name="header_image_left_width">18dp</dimen>
+	<dimen name="header_image_left_height">18.4dp</dimen>
+	<dimen name="header_more_info_height">30dp</dimen>
+	<dimen name="header_custom_battery_power_width">17.25dp</dimen>
+	<dimen name="header_custom_battery_power_height">8.5dp</dimen>
+	<dimen name="header_left_mode_divider">4dp</dimen>
+	<dimen name="rl_header_speed_width">75.7dp</dimen>
+	<dimen name="rl_header_altitude_width">82.4dp</dimen>
+	<dimen name="rl_header_distance_width">86.7dp</dimen>
+	<dimen name="rl_header_battery_width">111.4dp</dimen>
+
+
+	<!--  Header More Info  -->
+	<dimen name="header_more_info_item_width">107dp</dimen>
+	<dimen name="header_more_info_text_size">15sp</dimen>
+	<dimen name="header_more_info_remote_voltage_width">13.7dp</dimen>
+	<dimen name="header_more_info_remote_voltage_height">14.7dp</dimen>
+	<dimen name="header_more_info_item_icon_text_space">4dp</dimen>
+	<dimen name="header_more_info_remote_battery_width">16dp</dimen>
+	<dimen name="header_more_info_remote_battery_height">15dp</dimen>
+	<dimen name="header_more_info_image_translate_width">47dp</dimen>
+	<dimen name="header_more_info_image_translate_height">13dp</dimen>
+	<dimen name="header_more_info_remote_signal_width">47.4dp</dimen>
+	<dimen name="header_more_info_obstacle_avoid_width">29.4dp</dimen>
+	<dimen name="header_more_info_remote_signal_height">15.4dp</dimen>
+	<dimen name="header_more_info_satellite_width">16.4dp</dimen>
+	<dimen name="header_more_info_satellite_height">16.4dp</dimen>
+	<dimen name="header_more_info_obstacle_avoid_height">11.7dp</dimen>
+
+	<!--  intercept (yhl)  -->
+	<dimen name="intercept_padding_for_operate">2dp</dimen>
+	<dimen name="intercept_margin_min">8dp</dimen>
+	<dimen name="intercept_switch_margin_right">2dp</dimen>
+	<dimen name="intercept_switch_shrink_pivot">20dp</dimen>
+	<dimen name="intercept_switch_operate_width">30.75dp</dimen>
+	<dimen name="intercept_aircraft_camera_right_width">120dp</dimen>
+	<dimen name="intercept_aircraft_camera_right_height">210dp</dimen>
+	<dimen name="intercept_aircraft_camera_layout_editor">338dp</dimen>
+
+	<!--START for camera controller-->
+	<dimen name="camera_photo_video_base">62dp</dimen>
+	<dimen name="camera_photo_video_base_radius">31dp</dimen>
+	<dimen name="camera_photo_video_inside">50dp</dimen>
+	<dimen name="camera_photo_video_inside_radius">25dp</dimen>
+	<dimen name="camera_photo_video_btn_ring">3dp</dimen>
+	<dimen name="camera_photo_video_btn_ring_inner">28dp</dimen>
+	<dimen name="camera_photo_video_btn_gap">2dp</dimen>
+	<dimen name="camera_photo_video_recording">26dp</dimen>
+	<dimen name="camera_photo_video_recording_radius">3dp</dimen>
+	<dimen name="camera_photo_video_recording_point">9dp</dimen>
+	<dimen name="camera_photo_video_recording_point_radius">4.5dp</dimen>
+	<dimen name="camera_iv_mode_switcher">42dp</dimen>
+	<dimen name="camera_iv_mode_switcher_bottom">30dp</dimen>
+	<dimen name="camera_lin_record_status_top">5dp</dimen>
+	<dimen name="camera_lin_record_left_status_top">3dp</dimen>
+	<dimen name="camera_tv_recording_time_left">5dp</dimen>
+	<dimen name="camera_album_enter_border_width">1dp</dimen>
+	<dimen name="camera_photo_child_inner">32dp</dimen>
+	<dimen name="camera_photo_child_outer">3dp</dimen>
+	<dimen name="camera_photo_child_inside_radius">16dp</dimen>
+	<dimen name="camera_photo_child__ring_inner">18dp</dimen>
+	<!--END for camera controller-->
+
+	<!--Camera Parameters Setting-->
+	<dimen name="camera_para_setting_ui_para_text_size">17.3sp</dimen>
+	<dimen name="camera_para_setting_para_text_size">11.3sp</dimen>
+	<dimen name="camera_para_setting_divider_size">3.3dp</dimen>
+	<dimen name="camera_mode_view_item_width">78.5dp</dimen>
+	<dimen name="camera_mode_view_item_height">42dp</dimen>
+	<dimen name="camera_mode_view_icon_width">20dp</dimen>
+	<dimen name="camera_mode_view_icon_height">17.4dp</dimen>
+	<dimen name="gimbal_angle_container_width">80.7dp</dimen>
+	<dimen name="gimbal_angle_container_height">42dp</dimen>
+	<dimen name="camera_mode_view_width">559.4dp</dimen>
+	<dimen name="camera_mode_view_height">42dp</dimen>
+	<dimen name="camera_mode_para_view_height">49.4dp</dimen>
+	<dimen name="camera_mode_para_view_icon_triangle_width">17dp</dimen>
+	<dimen name="camera_mode_para_view_icon_triangle_height">14.3dp</dimen>
+	<dimen name="third_para_setting_icon_arrow_width">24.4dp</dimen>
+	<dimen name="third_para_setting_icon_arrow_height">6.7dp</dimen>
+	<dimen name="third_para_setting_back_button_width">52.7dp</dimen>
+	<dimen name="third_para_setting_back_button_height">26.7dp</dimen>
+	<dimen name="third_para_setting_back_button_bottom_margin">6dp</dimen>
+	<dimen name="third_para_setting_left_text_left_margin">4dp</dimen>
+	<dimen name="third_para_setting_back_button_right_margin">12dp</dimen>
+	<dimen name="third_para_setting_left_text_right_margin">8dp</dimen>
+	<dimen name="third_para_setting_left_text_bottom_margin">10dp</dimen>
+	<dimen name="third_para_setting_left_text_padding">2dp</dimen>
+	<dimen name="rl_third_setting_arrow_width">86dp</dimen>
+	<dimen name="rl_third_setting_arrow_height">23.4dp</dimen>
+	<dimen name="camera_para_setting_item_padding">23.4dp</dimen>
+	<dimen name="camera_para_setting_item_space">8dp</dimen>
+	<dimen name="rl_mode_function_help_width">34dp</dimen>
+	<dimen name="iv_mode_function_help_width">15dp</dimen>
+	<dimen name="iv_next_rank_camera_setting_width">20.4dp</dimen>
+	<dimen name="iv_camera_modes_scroll_indicate_arrow_height">12dp</dimen>
+
+	<!--Warn dimens-->
+	<dimen name="warn_status_bg_dimen">35dp</dimen>
+	<dimen name="warn_status_history_bg_dimen">40dp</dimen>
+	<dimen name="toast_history_view_width">240dp</dimen>
+
+	<dimen name="self_checking_divider">1dp</dimen>
+	<dimen name="self_checking_common_30dp">30dp</dimen>
+	<dimen name="self_checking_common_70dp">70dp</dimen>
+	<dimen name="self_checking_common_100dp">100dp</dimen>
+	<dimen name="self_checking_common_170dp">170dp</dimen>
+
+	<!--START for Aircraft Setting-->
+	<dimen name="aircraft_setting_layout_center_divider">6dp</dimen>
+	<dimen name="aircraft_setting_layout_margin">12dp</dimen>
+	<dimen name="aircraft_setting_iv_setting_close">32dp</dimen>
+	<dimen name="aircraft_setting_container_top">45dp</dimen>
+	<dimen name="aircraft_setting_title_height">42dp</dimen>
+	<dimen name="aircraft_setting_left_width">180dp</dimen>
+	<dimen name="aircraft_setting_divider_dp">1dp</dimen>
+	<dimen name="aircraft_setting_item_height">52dp</dimen>
+	<dimen name="aircraft_setting_item_margin">8dp</dimen>
+	<dimen name="aircraft_setting_container_radius">5dp</dimen>
+	<dimen name="aircraft_setting_flight_state_height">44dp</dimen>
+	<dimen name="aircraft_setting_item_right_iv_margin">10dp</dimen>
+	<dimen name="aircraft_setting_item_right_margin">30dp</dimen>
+	<dimen name="aircraft_setting_item_btn_width">1dp</dimen>
+	<dimen name="aircraft_setting_item_common_margin_left">16dp</dimen>
+	<dimen name="aircraft_setting_item_common_margin_more_left">24dp</dimen>
+	<dimen name="aircraft_setting_item_common_margin_right">16dp</dimen>
+	<dimen name="aircraft_setting_item_common_arrow_to_text">6dp</dimen>
+	<dimen name="aircraft_setting_item_common_slide_switch_width">45dp</dimen>
+	<dimen name="aircraft_setting_item_common_slide_switch_height">25dp</dimen>
+	<dimen name="aircraft_setting_item_common_switcher_expand_top">10dp</dimen>
+	<dimen name="aircraft_setting_item_common_switcher_expand_bottom">18dp</dimen>
+	<dimen name="aircraft_setting_item_common_item_height">52dp</dimen>
+	<dimen name="aircraft_setting_item_pop_padding_top_bottom">8dp</dimen>
+	<dimen name="aircraft_setting_item_pop_padding_left_right">12dp</dimen>
+	<dimen name="aircraft_setting_item_common_edit_text_width">70dp</dimen>
+	<dimen name="aircraft_setting_item_common_edit_text_height">30dp</dimen>
+
+	<dimen name="aircraft_setting_self_checking_height">52dp</dimen>
+	<dimen name="aircraft_setting_self_checking_item_iv_width">54dp</dimen>
+	<dimen name="aircraft_setting_self_checking_btn_height">30dp</dimen>
+	<dimen name="aircraft_setting_self_checking_padding">5dp</dimen>
+
+	<!--START for DSP Setting-->
+	<dimen name="dsp_channelview_margin_left">40dp</dimen>
+	<dimen name="dsp_channelview_margin_bottom">10dp</dimen>
+	<dimen name="dsp_rect_size">12dp</dimen>
+	<dimen name="dsp_txt_title_padding">12dp</dimen>
+	<dimen name="dsp_txt_title_size">16sp</dimen>
+	<dimen name="dsp_txt_noise_size">12sp</dimen>
+
+	<!--END for DSP Setting-->
+
+	<!--START for REMOTE Setting-->
+	<dimen name="stick_mode_txt_margin">10dp</dimen>
+	<dimen name="stick_mode_txt_size">16sp</dimen>
+	<dimen name="remote_title_txt_size">16sp</dimen>
+	<dimen name="remote_subtitle_txt_size">14sp</dimen>
+	<dimen name="remote_txt_padding">16dp</dimen>
+
+	<!--END for REMOTE Setting-->
+
+	<!--START for GENERAL Setting-->
+	<dimen name="setting_about_app_icon_size">66dp</dimen>
+	<dimen name="setting_about_app_icon_margin">18dp</dimen>
+	<dimen name="setting_about_app_name_margin">10dp</dimen>
+	<dimen name="setting_about_copy_right_margin">5dp</dimen>
+
+	<!--START for Model Choice-->
+	<dimen name="model_choice_text_title_size">18sp</dimen>
+	<dimen name="model_choice_text_content_size">15sp</dimen>
+	<dimen name="model_choice_text_notice_size">12sp</dimen>
+	<dimen name="model_choice_margin">19dp</dimen>
+	<dimen name="model_choice_head_view_height">45dp</dimen>
+	<dimen name="model_choice_foot_view_height">51dp</dimen>
+	<dimen name="model_choice_padding">5dp</dimen>
+	<dimen name="model_choice_margin_35">35dp</dimen>
+	<dimen name="model_choice_margin_25">25dp</dimen>
+	<dimen name="model_choice_margin_24">24dp</dimen>
+	<dimen name="model_choice_margin_17">17dp</dimen>
+	<dimen name="model_choice_margin_15">15dp</dimen>
+	<dimen name="model_choice_margin_13">13dp</dimen>
+	<dimen name="model_choice_margin_10">10dp</dimen>
+	<dimen name="model_choice_margin_5">5dp</dimen>
+	<!--<dimen name="model_choice_image_width">191.6dp</dimen>-->
+	<!--<dimen name="model_choice_image_height">139.9dp</dimen>-->
+
+	<dimen name="model_choice_image_width">165.66dp</dimen>
+	<dimen name="model_choice_image_height">121dp</dimen>
+
+	<dimen name="model_choice_title_image_width">18dp</dimen>
+	<dimen name="model_choice_title_image_height">18dp</dimen>
+
+	<!--END for REMOTE Setting-->
+
+	<!--START for General Camera Setting-->
+	<dimen name="general_camera_setting_title_height">45dp</dimen>
+	<dimen name="general_camera_setting_item_height">60dp</dimen>
+	<dimen name="general_camera_setting_item_width">314dp</dimen>
+	<dimen name="general_camera_setting_text_size">16.7dp</dimen>
+	<dimen name="general_camera_setting_padding">20dp</dimen>
+	<dimen name="general_camera_setting_recyclerView_padding_bottom">10dp</dimen>
+	<dimen name="general_camera_setting_divider">0.3dp</dimen>
+	<dimen name="general_camera_setting_iv_width">45dp</dimen>
+	<dimen name="general_camera_setting_iv_height">40dp</dimen>
+
+	<!--END for REMOTE Setting-->
+
+	<!--Map dimen-->
+	<dimen name="margin_3dp">3dp</dimen>
+	<dimen name="margin_8dp">8dp</dimen>
+	<dimen name="margin_13dp">13dp</dimen>
+	<dimen name="margin_16dp">16dp</dimen>
+	<dimen name="margin_19dp">19dp</dimen>
+	<dimen name="margin_26dp">26dp</dimen>
+	<dimen name="margin_32dp">32dp</dimen>
+	<dimen name="map_widget_icon_width">35dp</dimen>
+	<dimen name="map_widget_icon_margin_right">26dp</dimen>
+	<dimen name="map_type_choice_item_height">56dp</dimen>
+	<dimen name="map_type_choice_bg">320dp</dimen>
+	<dimen name="map_setting_slide_width">45dp</dimen>
+	<dimen name="map_setting_slide_height">25dp</dimen>
+	<dimen name="map_type_choice_iv_width">80dp</dimen>
+	<dimen name="map_location_choice_bg_width">180dp</dimen>
+	<dimen name="map_location_choice_item_width">60dp</dimen>
+	<dimen name="map_location_choice_bg_height">50dp</dimen>
+	<dimen name="map_location_home_icon_width">14.7dp</dimen>
+	<dimen name="map_location_home_icon_height">17.3dp</dimen>
+	<dimen name="map_location_drone_icon_width">18dp</dimen>
+	<dimen name="map_location_drone_icon_height">16.3dp</dimen>
+	<dimen name="map_type_choice_dialog_height">328dp</dimen>
+	<dimen name="map_type_choice_dialog_margin_right">66dp</dimen>
+
+	<!--Common Dialog-->
+	<dimen name="dialog_weight">297dp</dimen>
+	<dimen name="dialog_msg_margin">13dp</dimen>
+	<dimen name="dialog_divider_height">1dp</dimen>
+	<dimen name="dialog_divider_margin_top">43dp</dimen>
+	<dimen name="dialog_scrollview_tv_margin">3dp</dimen>
+	<dimen name="dialog_scrollview_tv_padding">8dp</dimen>
+	<dimen name="dialog_bottom_height">38dp</dimen>
+	<dimen name="dialog_bottom_tv_width">148dp</dimen>
+	<dimen name="dialog_divider_bottom_height">43dp</dimen>
+
+	<!--Warn Toast-->
+	<dimen name="warn_status_close_icon_width">10dp</dimen>
+	<dimen name="warn_show_history_iv_width">30dp</dimen>
+	<dimen name="warn_show_history_iv_height">40dp</dimen>
+	<dimen name="warn_history_clear_iv_width">20dp</dimen>
+	<dimen name="warn_status_icon_width">13.3dp</dimen>
+
+	<!--Gimbal Roll Adjust-->
+	<dimen name="margin_24dp">24dp</dimen>
+	<dimen name="margin_40dp">40dp</dimen>
+	<dimen name="margin_55dp">55dp</dimen>
+	<dimen name="margin_1dp">1dp</dimen>
+	<dimen name="gimbal_gui_guideline">409dp</dimen>
+	<dimen name="gimbal_gui_guideline_start">20dp</dimen>
+
+	<!--ExpView-->
+	<dimen name="exp_view_width">125dp</dimen>
+	<dimen name="exp_edit_text_width">90dp</dimen>
+
+	<!--Mission View-->
+	<dimen name="mission_margin_24dp">24dp</dimen>
+	<dimen name="mission_close_icon_dimen">10dp</dimen>
+	<dimen name="mission_fragment_width">210dp</dimen>
+	<dimen name="mission_btn_height">30dp</dimen>
+	<dimen name="mission_pause_btn_width">16.6dp</dimen>
+	<dimen name="mission_drop_item_height">35dp</dimen>
+	<dimen name="mission_drop_rv_height">90dp</dimen>
+	<dimen name="mission_unpress_rv_height">30dp</dimen>
+	<dimen name="mission_seekbar_icon">6dp</dimen>
+
+	<!-- Tracking View-->
+	<dimen name="tracking_shape_conner">3dp</dimen>
+	<dimen name="tracking_bottom_view_height">42dp</dimen>
+	<dimen name="tracking_bottom_view_toast_width">176dp</dimen>
+	<dimen name="tracking_bottom_view_toast_height">84dp</dimen>
+	<dimen name="tracking_start_bottom_distance_height">20dp</dimen>
+	<dimen name="tracking_cancel_distance_height">6.7dp</dimen>
+	<dimen name="tracking_toast_height">51dp</dimen>
+	<dimen name="tracking_toast_btn_width">190.6dp</dimen>
+	<dimen name="tracking_left_margin">17.3dp</dimen>
+	<dimen name="tracking_top_margin">10dp</dimen>
+	<dimen name="tracking_left_margin_cancel">76dp</dimen>
+	<dimen name="tracking_margin_top_toast">7dp</dimen>
+
+	<!--Range SeekBar-->
+	<dimen name="thumb_width">30dp</dimen>
+	<dimen name="thumb_height">30dp</dimen>
+	<dimen name="bar_height">2dp</dimen>
+
+	<!--Autel Toast-->
+	<dimen name="toast_padding_left_right">30dp</dimen>
+	<dimen name="toast_padding_top_bottom">8dp</dimen>
+	<dimen name="toast_bg_shape_radius">4dp</dimen>
+	<dimen name="toast_padding_album_left_right">10dp</dimen>
+
+	<!--Album-->
+	<dimen name="album_top_height">40dp</dimen>
+	<dimen name="album_top_margin_left_right">10dp</dimen>
+	<dimen name="album_iv_btn_width">15dp</dimen>
+	<dimen name="album_iv_btn_height">16dp</dimen>
+	<dimen name="album_iv_margin_iv">20dp</dimen>
+	<dimen name="album_top_margin_bottom">5dp</dimen>
+	<dimen name="album_preview_progressbar_width">330dp</dimen>
+	<dimen name="album_preview_progressbar_height">2dp</dimen>
+	<dimen name="album_preview_gallery_height">80dp</dimen>
+	<dimen name="album_preview_gallery_width">500dp</dimen>
+	<dimen name="album_preview_local_end">80dp</dimen>
+	<dimen name="album_preview_local_top">80dp</dimen>
+	<dimen name="album_list_iv_selected">80dp</dimen>
+	<dimen name="album_list_title_height">25dp</dimen>
+	<dimen name="album_list_content_size">125dp</dimen>
+	<dimen name="album_list_content_sign_height">24dp</dimen>
+	<dimen name="album_list_content_sign_width">12dp</dimen>
+	<dimen name="album_preview_bottom_item_width">68dp</dimen>
+	<dimen name="album_preview_bottom_item_height">54dp</dimen>
+	<!--SegmentedGroup-->
+	<dimen name="radio_button_conner_radius">5dp</dimen>
+	<dimen name="radio_button_stroke_border">1dp</dimen>
+
+	<dimen name="vr_home_width">120dp</dimen>
+	<dimen name="vr_speed_altitude_height">100dp</dimen>
+	<dimen name="vr_speed_altitude_width">30dp</dimen>
+	<dimen name="vr_speed_altitude_height_margin">50dp</dimen>
+	<dimen name="vr_value_indicate_height">10dp</dimen>
+	<dimen name="vr_home_width_half">70dp</dimen>
+	<dimen name="vr_toast_margin">80dp</dimen>
+
+	<!--FirmwareUpgradeBaseActivity-->
+	<dimen name="firmware_upgrade_title_height">42dp</dimen>
+	<dimen name="firmware_upgrade_title_diver">0.3dp</dimen>
+	<dimen name="firmware_upgrade_title_margin">12dp</dimen>
+	<dimen name="firmware_upgrade_content_height">145.6dp</dimen>
+	<dimen name="firmware_upgrade_notice_height">113.6dp</dimen>
+	<dimen name="firmware_upgrade_margin_start">30.6dp</dimen>
+	<dimen name="firmware_upgrade_margin_end">26.6dp</dimen>
+	<dimen name="firmware_upgrade_icon_size">77.6dp</dimen>
+	<dimen name="firmware_upgrade_info_margin">10dp</dimen>
+	<dimen name="firmware_upgrade_change_margin">10dp</dimen>
+	<dimen name="firmware_upgrade_progress_bar_margin">10dp</dimen>
+	<dimen name="firmware_upgrade_start_text_width">280dp</dimen>
+	<dimen name="firmware_upgrade_start_text_height">54dp</dimen>
+	<dimen name="firmware_upgrade_start_text_bottom">68.6dp</dimen>
+
+	<!--connect to aircraft guide-->
+	<dimen name="connect_to_aircraft_top">20dp</dimen>
+	<dimen name="connect_to_aircraft_title_height">42dp</dimen>
+	<dimen name="connect_to_aircraft_left_back_width">30dp</dimen>
+	<dimen name="connect_to_aircraft_left_back_padding">12dp</dimen>
+	<dimen name="connect_to_aircraft_distance">10dp</dimen>
+	<dimen name="connect_to_aircraft_one_left">31.7dp</dimen>
+	<dimen name="connect_to_aircraft_two_left">68.3dp</dimen>
+	<dimen name="connect_to_aircraft_margin_left">38.3dp</dimen>
+	<dimen name="connect_to_aircraft_text1_margin_left">11.7dp</dimen>
+	<dimen name="connect_to_aircraft_view_width">0.7dp</dimen>
+	<dimen name="connect_to_aircraft_number_width">16dp</dimen>
+
+	<!-- BubbleView -->
+	<dimen name="bubbleView_default_radius">4dp</dimen>
+	<dimen name="fab_margin">16dp</dimen>
+
+	<dimen name="vr_setting_close_height_width">30dp</dimen>
+	<dimen name="vr_setting_width">370dp</dimen>
+	<dimen name="vr_setting_back_width">40dp</dimen>
+	<dimen name="vr_setting_back_margin">10dp</dimen>
+	<dimen name="vr_setting_zoom_bar_width">250dp</dimen>
+	<dimen name="vr_setting_zoom_bar_margin">120dp</dimen>
+	<dimen name="vr_single_telemetry_width">200dp</dimen>
+	<dimen name="vr_each_status_bar_width">40dp</dimen>
+
+	<dimen name="battery_setting_min_height">80dp</dimen>
+	<dimen name="battery_cell_width">85dp</dimen>
+	<dimen name="battery_cell_height">20dp</dimen>
+	<dimen name="battery_cell_min_height">90dp</dimen>
+
+	<!-- mediaController-->
+	<dimen name="media_controller_header_height">32dp</dimen>
+	<dimen name="media_controller_header_image_back_width">10dp</dimen>
+	<dimen name="media_controller_header_image_back_height">15.7dp</dimen>
+	<dimen name="media_controller_header_image_back_margin_left">23.3dp</dimen>
+	<dimen name="media_controller_header_text_back_margin_left">6.7dp</dimen>
+	<dimen name="media_controller_header_text_back_size">13.3sp</dimen>
+	<dimen name="media_controller_bottom_height">38.3dp</dimen>
+	<dimen name="media_controller_bottom_time_text_margin_right">23.3dp</dimen>
+	<dimen name="media_controller_bottom_time_text_size">10sp</dimen>
+	<dimen name="media_controller_bottom_current_time_text_margin_right">1dp</dimen>
+	<dimen name="media_controller_bottom_time_seekbar_width">416.7dp</dimen>
+	<dimen name="media_controller_bottom_image_pause_width">20dp</dimen>
+	<dimen name="media_controller_bottom_image_pause_margin_left">23.3dp</dimen>
+
+	<!--intelligent flight help -->
+	<dimen name="intelligent_flight_follow_margin_top">34dp</dimen>
+	<dimen name="icon_auto_pilot_help_hot_follow_width">375dp</dimen>
+	<dimen name="icon_auto_pilot_help_hot_follow_height">248dp</dimen>
+	<dimen name="iv_auto_pilot_help_back_width">50dp</dimen>
+	<dimen name="cl_intelligent_flight_list_title_width">153dp</dimen>
+	<dimen name="cl_intelligent_flight_list_title_height">27dp</dimen>
+	<dimen name="cl_intelligent_flight_list_title_margin_right">53dp</dimen>
+	<dimen name="cl_intelligent_flight_list_title_margin_top">17dp</dimen>
+	<dimen name="tv_intelligent_flight_title_margin">4dp</dimen>
+	<dimen name="iv_intelligent_flight_ass_width">35dp</dimen>
+	<dimen name="sg_rc_stick_action_margin_bottom">8dp</dimen>
+	<dimen name="sg_sc_corner_radius">10dp</dimen>
+	<dimen name="btn_stick_japan_width">85dp</dimen>
+	<dimen name="tv_intelligent_flight_help_tip_margin_bottom">4dp</dimen>
+	<dimen name="indicator_height">18dp</dimen>
+	<dimen name="indicator_ci_margin">6.7dp</dimen>
+	<dimen name="indicator_ci_radius">3dp</dimen>
+	<dimen name="tv_left_stick_margin_left">86dp</dimen>
+	<dimen name="tv_left_stick_margin_top">42dp</dimen>
+	<dimen name="tv_right_stick_margin_right">242dp</dimen>
+	<dimen name="ll_left_stick_margin_top">73.4dp</dimen>
+	<dimen name="ll_left_stick_ll_height">102.7dp</dimen>
+	<dimen name="tv_rocker_follow_left_top_margin_bottom">10dp</dimen>
+	<dimen name="gs_guide_follow_setting_divider_height">118dp</dimen>
+	<dimen name="gs_guide_follow_setting_divider_margin_top">90dp</dimen>
+	<dimen name="tv_guide_mode_item_height">26.7dp</dimen>
+	<dimen name="iv_auto_pilot_help_orbit_width">368.7dp</dimen>
+	<dimen name="iv_auto_pilot_help_orbit_height">252.7dp</dimen>
+	<dimen name="iv_auto_pilot_help_orbit_margin_top">50dp</dimen>
+	<dimen name="iv_auto_pilot_help_orbit2_width">473.4dp</dimen>
+	<dimen name="iv_auto_pilot_help_orbit2_height">119.7dp</dimen>
+	<dimen name="iv_auto_pilot_help_orbit2_margin_top">83.4dp</dimen>
+	<dimen name="ll_auto_pilot_help_orbit2_margin_top">216.7dp</dimen>
+	<dimen name="iv_auto_pilot_help_waypoint2_width">456.7dp</dimen>
+	<dimen name="iv_auto_pilot_help_waypoint2_height">122.7dp</dimen>
+	<dimen name="yv_gs_guide_fly_point_speed_title_margin_top">30.7dp</dimen>
+	<dimen name="gs_guide_rocker_left_width">82.4dp</dimen>
+	<dimen name="gs_guide_rocker_left_height">62.4dp</dimen>
+	<dimen name="lv_auto_pilot_modes_width">153.4dp</dimen>
+	<dimen name="iv_gs_guide_rocker_left_width">134.7dp</dimen>
+	<dimen name="iv_gs_guide_rocker_left_height">102dp</dimen>
+	<dimen name="iv_auto_pilot_help_waypoint_width">407dp</dimen>
+	<dimen name="iv_auto_pilot_help_waypoint_height">214.7dp</dimen>
+
+	<!--orbit dimen-->
+	<dimen name="orbit_margin_16dp">16dp</dimen>
+	<dimen name="orbit_margin_26dp">26dp</dimen>
+	<dimen name="top_container_height">30dp</dimen>
+	<dimen name="bottom_container_height">35dp</dimen>
+	<dimen name="orbit_rb_margin_left">12.4dp</dimen>
+	<dimen name="iv_orbit1_width">173.4dp</dimen>
+	<dimen name="iv_orbit1_height">106.7dp</dimen>
+	<dimen name="orbit_text_size_13sp">13sp</dimen>
+	<dimen name="orbit_advance_seekbar_height">65dp</dimen>
+	<dimen name="iv_remote_img_width">84dp</dimen>
+	<dimen name="iv_remote_img_height">55.7dp</dimen>
+	<dimen name="iv_remote_img_left_right_margin">23dp</dimen>
+
+	<!--waypoint dimen-->
+	<dimen name="iv_waypoint_red_icon_width">28dp</dimen>
+	<dimen name="btn_add_container_width">35dp</dimen>
+	<dimen name="mission_btn_close_container_width">30dp</dimen>
+
+	<!--follow mode dimen-->
+	<dimen name="distance_tv_text_size">22sp</dimen>
+	<dimen name="btn_waypoint_unread_width">60dp</dimen>
+
+	<!-- Locked flight mini-map. This value is PER-DEVICE.
+
+	     A value that is right on a phone is wrong on a 1024x720dp controller and vice versa;
+	     the reasoning below transfers between screens, the number does not.
+
+	     flight_resource_row_margin_end is DERIVED from this value: map size + 14dp, where the
+	     14dp is the HUD column's paddingEnd. Change one and change the other, in EVERY bucket
+	     that overrides either.
+
+	     The HUD column is a fixed-height vertical LinearLayout: slider + EV scale + exposure
+	     readout + weighted spacer + 5-line readout + gimbal + FAA line + THIS MAP. The map is
+	     the last child, so when the column's contents exceed the screen height the weighted
+	     spacer collapses to zero and the map is pushed off the bottom and silently clipped —
+	     no error, no crash, just a half-map (the same failure class as the Home screen's
+	     ENTER FLIGHT card).
+
+	     Budget: everything above the map is ~233dp, or ~269dp while the IR palette button is
+	     showing (it is in this column, below the exposure readout, and only visible in thermal
+	     mode — so the worst case is thermal ON). At 269dp, a 130dp map needs 399dp of height,
+	     160dp needs 429dp and the wide-screen 240dp needs 509dp. A Pixel 8 Pro in
+	     landscape is ~448dp; the Smart Controller V3 is MEASURED at 720dp.
+	     200dp here would need 449dp and overflow the Pixel by a hair. Don't raise it without
+	     redoing that arithmetic.
+
+	     NOTE the 429dp figure for the 160dp bucket sits only ~19dp under a Pixel-class 448dp
+	     screen, and that headroom exists only while thermal is off. Anything further added to
+	     this column will overflow small screens FIRST, and silently — the map just loses its
+	     bottom. Measure before adding, and prefer the wide-screen bucket for new controls.
+
+	     flight_map_size is the COLUMN width: it also sizes the EV slider, the EV scale row and
+	     the exposure readout, so changing it moves more than the map. flight_map_height is the
+	     map alone. They are equal here and in values-h440dp (square map); only the wide-screen
+	     bucket makes the map taller than it is wide. -->
+	<dimen name="flight_map_size">130dp</dimen>
+	<dimen name="flight_map_height">130dp</dimen>
+
+	<!-- flightResourceMonitorRow's marginEnd — see its own layout comment. MUST equal
+	     flight_map_size + flightHudColumn's paddingEnd (14dp), so it stays pinned to the map's
+	     left edge in every size bucket. A plain 144dp hardcoded into the layout is correct only
+	     for THIS (base) bucket — it silently falls ~50dp short of the map's real edge on the
+	     Smart Controller V3, which lands in values-w820dp where the map is 180dp, not 130dp.
+	     Update alongside flight_map_size. -->
+	<dimen name="flight_resource_row_margin_end">144dp</dimen>
+
+	<dimen name="margin_84dp">84dp</dimen>
+	<dimen name="margin_30dp">30dp</dimen>
+	<dimen name="margin_50dp">50dp</dimen>
+	<dimen name="margin_350dp">350dp</dimen>
+
+	<!-- Flight-screen readout column text (Clock / SPI overlay text / gimbal pitch / FAA ceiling
+	     / RTH altitude) — the flightReadoutText style in styles.xml. Base size matches hudText's
+	     12sp, unchanged on smaller hardware (e.g. Smart Controller SE). See values-w820dp for
+	     the Smart Controller V3 override: hard to read at 12sp on that screen. -->
+	<dimen name="flight_readout_text_size">12sp</dimen>
+
+	<!-- CrosshairView stroke widths — arms (outline/line) and the accuracy ring (ring/
+	     ringOutline). Base values here are in PX, not DP, deliberately: they are raw
+	     Paint.strokeWidth values (3f, 1.5f, 3f, 6f), so this bucket's on-screen appearance is
+	     the same on every screen. Only values-w820dp (the Smart Controller V3) overrides them,
+	     ~25% heavier — the reticle reads too fine at this screen's real size/viewing
+	     distance. Read via Resources.getDimension(), which returns PX values as-is
+	     with no density scaling, same reasoning as the raw-px choice. -->
+	<dimen name="crosshair_arm_outline_width">3px</dimen>
+	<dimen name="crosshair_arm_line_width">1.5px</dimen>
+	<dimen name="crosshair_ring_width">3px</dimen>
+	<dimen name="crosshair_ring_outline_width">6px</dimen>
+
+	<!-- Black outline around HUD readout glyphs — see OutlinedTextView. This is
+	     the VISIBLE width; the class doubles it, because a centred stroke hides its inner half
+	     under the fill.
+
+	     ⚠ PER-DEVICE, for the same reason flight_readout_text_size is. This base bucket is for
+	     the smaller screens (and phones) where the readouts are 12sp: a stroke
+	     that reads well at 18sp fills in the counters of 12sp glyphs and turns them to mud.
+	     values-w820dp (the Smart Controller V3) carries the heavier value. Re-measure on a real
+	     screen over a BRIGHT scene before changing either — that is the case this exists for.
+
+	     ⚠ THIS IS THE STROKE WIDTH AND HALF OF IT FALLS INSIDE THE LETTER. Keep it near an
+	     eighth of the text size. 1.8dp here, DOUBLED in the view, leaves about 1px of white
+	     inside a 5px stem on the controller and the whole readout renders as black blobs.
+	     1.5dp is 3px against this bucket's 24px text. -->
+	<dimen name="hud_text_outline_width">1.5dp</dimen>
+
+	<!-- Corner radius of a floating CONTROL on the flight screen: the toolbar capsules and the
+	     mini-map's zoom button.
+
+	     ⚠ TWO RADII, AND THE DIFFERENCE CARRIES MEANING (design decision, following TAK Aware's
+	     system). A control the pilot TOUCHES is heavily rounded; a thing the pilot READS is
+	     square or barely rounded — the mini-map frame has square corners, the readouts have no
+	     backing at all. Do not split the difference: a 10 or 12dp radius reads as a consumer
+	     card and tells the pilot nothing. -->
+	<dimen name="hud_control_radius">20dp</dimen>
+
+	<!-- Warning banner — PER-DEVICE. The text size, and the width the banner may take before
+	     the text wraps. Sized for a 1024dp-wide screen; a 768dp screen needs its own values.
+	     480dp keeps an open banner of five lines inside the left third of the picture; a
+	     narrower banner does not get smaller, it gets TALLER, and height is what covers the
+	     picture. The close button is the touch-target minimum, not the size of the glyph. -->
+	<dimen name="flight_warning_text_size">15sp</dimen>
+	<dimen name="flight_warning_max_width">480dp</dimen>
+	<dimen name="flight_warning_close_size">34dp</dimen>
+
+
+    <!-- ⚠ BOTH TOOLBAR CAPSULES MUST BE THIS TALL, AND IT IS A MINIMUM, NOT A HEIGHT.
+         The two clusters hold different things, so they measure differently: the ACTIONS
+         capsule's tallest child is the 46dp drop pin and the STATUS capsule's is a 34dp icon.
+         Two capsules that begin on the same line and end on different ones read as a mistake.
+
+         ⚠ IT IS DERIVED, NOT CHOSEN: the actions capsule's natural height, which is the drop
+         pin plus the capsule's own paddingVertical on each side.
+
+             46dp drop pin + 2 x 3dp paddingVertical = 52dp
+
+         A value BELOW that does nothing at all === the actions capsule is already taller, and
+         the status capsule stays short (at 40dp the capsules are not level).
+         If the drop pin or the padding changes, this changes with them.
+
+         A MINIMUM rather than a fixed height because either cluster may still grow: a longer
+         signal readout, a taller button style, a density not yet seen. minHeight can only make
+         a capsule taller, thus it can never clip its own content. -->
+    <dimen name="hud_capsule_height">52dp</dimen>
+
+    <!-- THE SHAPE OF EVERY TOGGLE PILL IN THE ACTIONS CAPSULE — AR, zoom, IR, lights, LIVE and
+         REC. Three of those are shape drawables and two are canvas views that draw their own
+         round rect, so the number lives here rather than in five places.
+
+         ⚠ 8dp IS NOT hud_control_radius (20dp), AND THE DIFFERENCE IS DELIBERATE. The capsule
+         is the container and takes the large radius; the pills INSIDE it take the small one. A
+         pill at the container's radius reads as a second container rather than a control in
+         one. This is the same two-radius rule the mini-map frame follows. -->
+    <dimen name="hud_pill_radius">8dp</dimen>
+    <dimen name="hud_pill_stroke">1.5dp</dimen>
+
+</resources>

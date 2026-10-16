@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The IDLE state of a toggle pill in the flight screen's actions capsule: AR, IR and the
+     exterior lights. It is deliberately colourless — white on the capsule's black — because a
+     status colour here would compete with the pill that is actually ON.
+
+     ⚠ THE GEOMETRY IS SHARED WITH bg_pill_active AND bg_pill_unknown AND MUST STAY SO. A
+     control that changes size when it turns on reads as a different control. Only the colour
+     carries the state. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/hud_pill_radius" />
+    <solid android:color="@color/tp_pill_idle_fill" />
+    <stroke android:width="@dimen/hud_pill_stroke" android:color="@color/tp_pill_idle_stroke" />
+</shape>

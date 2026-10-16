@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Exterior LEDs OFF: the same bulb with a slash through it.
+         Pair of ic_led_on — see that file for why the colours are explicit and not a tint.
+
+         THE SLASH IS DRAWN TWICE, background-colour then white. The under-stroke makes the
+         slash read as a GAP CUT THROUGH the bulb rather than as a second line. A single white
+         slash over a white bulb would be nearly invisible, and this is the icon a pilot checks
+         to confirm the aircraft is actually dark.
+
+         ⚠ THE UNDER-STROKE MUST MATCH WHAT IS BEHIND THE BUTTON. It was #0D47A1 when this
+         button sat on a solid blue action bar (bg_toolbar). The button now sits on a floating
+         capsule — bg_hud_capsule, black at 70 % over live video — thus the under-stroke is
+         BLACK.
+
+         It is the opaque black of tp_hud_outline and not the capsule's own 70 %: a translucent
+         stroke would show the moving picture through the slash, which is the one place in this
+         icon that has to read as solid nothing. -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M9,21c0,0.55 0.45,1 1,1h4c0.55,0 1,-0.45 1,-1v-1L9,20v1zM12,2C8.14,2 5,5.14 5,9c0,2.38 1.19,4.47 3,5.74L8,17c0,0.55 0.45,1 1,1h6c0.55,0 1,-0.45 1,-1v-2.26c1.81,-1.27 3,-3.36 3,-5.74 0,-3.86 -3.14,-7 -7,-7z" />
+    <path
+        android:strokeColor="@color/tp_hud_outline"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M3.5,3.5 L20.5,20.5" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M3.5,3.5 L20.5,20.5" />
+</vector>

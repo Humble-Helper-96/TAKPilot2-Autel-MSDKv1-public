@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Maximise: a rounded frame, a small filled
+         square nestled in its lower-left corner (where the control itself sits on the window),
+         and an arrow from that square out to the upper right. No backing; drawn at 60 % by the
+         view. The thin dark outline keeps it readable over a white-hot picture. -->
+    <path
+        android:strokeColor="#99000000" android:strokeWidth="3.2" android:strokeLineJoin="round"
+        android:pathData="M6,4 H18 A2,2 0 0 1 20,6 V18 A2,2 0 0 1 18,20 H11 M4,11 V6 A2,2 0 0 1 6,4 M10,14 L18,6 M13,6 H18 V11" />
+    <path
+        android:strokeColor="#FFFFFFFF" android:strokeWidth="1.6" android:strokeLineJoin="round" android:strokeLineCap="round"
+        android:pathData="M6,4 H18 A2,2 0 0 1 20,6 V18 A2,2 0 0 1 18,20 H11 M4,11 V6 A2,2 0 0 1 6,4 M10,14 L18,6 M13,6 H18 V11" />
+    <path android:fillColor="#99000000" android:pathData="M3,13 H10.6 V20.6 H3 Z" />
+    <path android:fillColor="#FFFFFFFF" android:pathData="M4,14 H10 V20 H4 Z" />
+</vector>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mini-map zoom toggle (WIDE / NEAR). It is a toggle pill, built to the same specification as
+     AR, IR and the lights in the toolbar capsule: hud_pill_radius corner,
+     hud_pill_stroke edge, tp_pill_idle_stroke light hairline.
+
+     ⚠ ONE THING DEPARTS FROM THE PILLS, AND IT HAS TO. The toolbar pills take a 20 % WHITE fill
+     because they sit on the capsule's near-black. This one sits ON THE MAP, over pale street
+     tiles, where a white wash is invisible and white text on it is unreadable. It keeps the dark
+     capsule fill, which holds against both pale streets and dark satellite imagery.
+
+     So: a pill's shape and a pill's hairline, a capsule's fill. Do not "finish the job" by
+     moving this to tp_pill_idle_fill — that was the state it was rescued FROM. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/hud_pill_radius" />
+    <solid android:color="@color/tp_hud_capsule" />
+    <stroke android:width="@dimen/hud_pill_stroke" android:color="@color/tp_pill_idle_stroke" />
+</shape>

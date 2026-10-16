@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Own-aircraft heading marker: a cyan navigation arrow pointing UP (north at 0° rotation);
+         the map layer rotates it by the drone's heading. Thin dark outline for contrast over
+         satellite/street imagery. -->
+    <path
+        android:fillColor="#00E5FF"
+        android:strokeColor="#003A40"
+        android:strokeWidth="0.9"
+        android:strokeLineJoin="round"
+        android:pathData="M12,2.5 L20,20.5 L12,16 L4,20.5 Z" />
+</vector>

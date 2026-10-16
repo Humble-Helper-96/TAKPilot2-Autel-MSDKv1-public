@@ -1,0 +1,29 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#FFFFFF">
+    <!-- Video Re-Sync: circular sync arrows around a video camera.
+         Tinted white at the VECTOR level rather than in the layout, so the Field Guide's
+         example renders identically to the toolbar. (ic_camera_shutter was the other icon
+         drawn this way; it went with the on-screen shutter pill.)
+         That guide's whole premise is that its icons ARE the app's icons; a layout-only tint
+         would have quietly broken it.
+         The path colours below are now overridden by the tint and kept only so the shapes stay
+         legible if the tint is ever removed. It was previously two-tone blue/cyan, which read
+         as a different class of control once the button gained the pill frame its white-glyph
+         neighbours use. -->
+    <path
+        android:fillColor="#2196F3"
+        android:pathData="M12,4V1L8,5l4,4V6c3.31,0 6,2.69 6,6 0,1.01 -0.25,1.97 -0.7,2.8l1.46,1.46C19.54,15.03 20,13.57 20,12c0,-4.42 -3.58,-8 -8,-8zM12,18c-3.31,0 -6,-2.69 -6,-6 0,-1.01 0.25,-1.97 0.7,-2.8L5.24,7.74C4.46,8.97 4,10.43 4,12c0,4.42 3.58,8 8,8v3l4,-4 -4,-4v3z" />
+    <group
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:translateX="6"
+        android:translateY="6">
+        <path
+            android:fillColor="#00E5FF"
+            android:pathData="M17,10.5V7c0,-0.55 -0.45,-1 -1,-1H4c-0.55,0 -1,0.45 -1,1v10c0,0.55 0.45,1 1,1h12c0.55,0 1,-0.45 1,-1v-3.5l4,4v-11l-4,4z" />
+    </group>
+</vector>

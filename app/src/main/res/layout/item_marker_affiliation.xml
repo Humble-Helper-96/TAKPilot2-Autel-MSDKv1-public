@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the marker-affiliation pickers ("Marker affiliation" and "Change Type").
+
+     Exists because those dialogs used AlertDialog.setItems(), which is text-only: the icons
+     were defined on TakDropMarkers.Affiliation but nothing ever drew them, so the pilot picked
+     an affiliation by reading a word when the whole point of MIL-STD shapes is that they are
+     recognised by shape and colour at a glance. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/affiliationIcon"
+        style="@style/TakDialogListIcon"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/affiliationLabel"
+        style="@style/TakDialogListLabel" />
+</LinearLayout>

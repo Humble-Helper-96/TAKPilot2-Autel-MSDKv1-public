@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Inbound AIR track (ADS-B and any other a-*-A-* contact) for the mini-map.
+
+     A fixed-wing silhouette pointing UP at 0 rotation; TakMapMarkers turns it to the track's
+     reported course. Deliberately a different SHAPE from everything else on this map, because
+     shape survives being 20px wide where colour alone does not:
+       - team contacts / PLIs are round dots
+       - our own aircraft is a cyan chevron
+       - the home point is a white house
+     White fill with a dark outline so it reads on street, satellite and custom tiles alike, and
+     is not confusable with the cyan used for own-ship and the default team colour. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:strokeColor="#FF16232B"
+        android:strokeWidth="1.1"
+        android:strokeLineJoin="round"
+        android:pathData="M12,2 L13.6,7.2 L21.5,12.4 L21.5,14.4 L13.6,11.8 L13.6,17.6 L16.4,19.8 L16.4,21.4 L12,20.2 L7.6,21.4 L7.6,19.8 L10.4,17.6 L10.4,11.8 L2.5,14.4 L2.5,12.4 L10.4,7.2 Z" />
+</vector>

@@ -1,0 +1,62 @@
+#!/bin/bash
+# INSTALL:  cp tools/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+# Git does not install hooks from a clone. A fresh checkout has NO guard and says nothing.
+# TAKPilot2 secret guard. Refuses a commit that stages a credential.
+#
+# WHY THIS EXISTS: a key removed from the working tree is still in every commit that carried it,
+# and `git log -S` finds it. A secret that reaches a commit is public the moment the repository
+# is; there is no later fix, only rotation.
+#
+# Bypass with `git commit --no-verify` if you are certain. Think first.
+
+fail() { echo "" >&2; echo "COMMIT REFUSED — $1" >&2; echo "" >&2; exit 1; }
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+# 1. Files that must never be committed, whatever they hold.
+banned=$(echo "$staged" | grep -Ei '(^|/)(keystore|autel-key|local)\.properties$|\.(jks|apk|aab)$|(^|/)secrets?\.(properties|json|ya?ml)$|\.(pem|p12|pfx)$')
+if [ -n "$banned" ]; then
+  fail "these files hold credentials or binaries and are staged:
+$(echo "$banned" | sed 's/^/    /')
+
+  Unstage them:  git restore --staged <file>
+  A .example or .template copy with PLACEHOLDER values is the tracked form."
+fi
+
+# 2. Real key material inside otherwise-normal files. SDK and map keys usually live in
+#    AndroidManifest.xml or source, not in a .properties file — so scan CONTENT too.
+#    Placeholders are allowed; anything that looks like a live value is not.
+hits=""
+for f in $staged; do
+  [ -f "$f" ] || continue
+  case "$f" in *.example|*.template) continue;; esac
+  # App and map keys are 24+ hex/alnum characters against an api-key-ish name.
+  # ⚠ NAME AND VALUE ARE NOT ADJACENT. A manifest key line has the form
+  #     android:name="com.amap.api.v2.apikey" android:value="<the key>"
+  #   — sixteen characters of unrelated XML sit between them. An "API_KEY followed by the
+  #   value" rule MISSES the exact line it exists to catch; this was tested and it did.
+  #   So: the credential NAME and a long value must share a LINE, not be neighbours.
+  # ⚠ AND THE VALUE IS A CONTIGUOUS ALPHANUMERIC RUN, 20+, IN VALUE POSITION: after an '=',
+  #   a ':' or a quote. A looser class matched the PATH in "res/values/takpilot_colors.xml"
+  #   beside the word "tokens", and later the method name getTrustStorePassword(), and refused
+  #   ordinary commits. A hook that cries wolf is a hook everybody runs with --no-verify,
+  #   which is worse than no hook.
+  m=$(git show ":$f" 2>/dev/null \
+      | grep -nEi '(api[_-]?key|apikey|app[_-]?key|storePassword|keyPassword|access[_-]?token|auth[_-]?token|client[_-]?secret)' \
+      | grep -E '[=:"'"'"'][[:space:]]*[A-Za-z0-9]{20,}' \
+      | grep -Eiv 'PLACEHOLDER|YOUR_|EXAMPLE|CHANGE_?ME|xxxx|\*\*\*\*|=[[:space:]]*$|""|\bnull\b')
+  [ -n "$m" ] && hits="$hits
+  $f:
+$(echo "$m" | sed 's/^/      /')"
+done
+
+if [ -n "$hits" ]; then
+  fail "a live-looking credential is staged INSIDE a tracked file:
+$hits
+
+  This is exactly how a key reaches a public repository.
+  Move the value to a gitignored .properties file and read it in build.gradle."
+fi
+
+exit 0

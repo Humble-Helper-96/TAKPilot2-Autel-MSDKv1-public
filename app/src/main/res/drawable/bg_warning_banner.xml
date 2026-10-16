@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Flight-screen warning banner (v1.5.9). The solid is a placeholder — FlightActivity tints
+     it red or amber per the warning's severity on every HUD tick. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#B71C1C" />
+    <corners android:radius="6dp" />
+</shape>

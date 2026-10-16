@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "THE AIRCRAFT HAS NOT ANSWERED" for a toggle pill. Amber, which is this application's
+     colour for UNKNOWN and not for caution — tp_state_unknown.
+
+     Only the exterior-lights button has this state today: AR and IR are held by the
+     application and are always known, while the lamps are a property of the AIRCRAFT that has
+     to be read back.
+
+     It is used instead of a 45 % ALPHA on the button. Dimming reads as DISABLED, and that
+     is a real confusion here rather than a theoretical one: the lights button IS disabled,
+     with no colour change, for as long as a write is in flight. Two different meanings had one
+     appearance. A pilot must be able to tell "confirmed lit" from "we do not know", because
+     only one of those is safe to act on at night.
+
+     ⚠ SAME GEOMETRY AS bg_zoom_pill — see that file. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/hud_pill_radius" />
+    <solid android:color="@color/tp_pill_unknown_fill" />
+    <stroke android:width="@dimen/hud_pill_stroke" android:color="@color/tp_state_unknown" />
+</shape>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One selectable row of the markers list: check box, affiliation icon, label.
+
+     The icon and label reuse the styles extracted from item_marker_affiliation.xml, which is
+     the row this one grew out of (they were extracted so a second list dialog had
+     something to reuse instead of copying). The 56dp minimum height comes from the same place
+     and is a touch target already verified on the Smart Controller V3 — do not shrink it to
+     fit more rows on screen.
+
+     The check box tint follows takArCheck, the dialog-row check box this application already
+     had. There is no dedicated check-box component, so the general rule applies:
+     the colour is a token.
+
+     Inflated with a ContextThemeWrapper on TakDialogTheme — see the markers dialog. Without it
+     the label renders white on white. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <CheckBox
+        android:id="@+id/markerRowCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:buttonTint="@color/tp_accent"
+        android:contentDescription="Select this marker"
+        android:clickable="false"
+        android:focusable="false" />
+
+    <ImageView
+        android:id="@+id/markerRowIcon"
+        style="@style/TakDialogListIcon"
+        android:layout_marginStart="8dp"
+        android:contentDescription="Marker type" />
+
+    <TextView
+        android:id="@+id/markerRowLabel"
+        style="@style/TakDialogListLabel" />
+
+</LinearLayout>

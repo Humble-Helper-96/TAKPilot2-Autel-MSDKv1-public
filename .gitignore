@@ -1,0 +1,22 @@
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.kotlin/
+captures/
+.DS_Store
+__pycache__/
+
+# Credentials — never commit. The tracked forms are the .example files.
+autel-key.properties
+keystore.properties
+*.jks
+*.keystore
+
+# Build outputs
+*.apk
+*.aab
+
+# Controller logs pulled for reading
+flight-logs/

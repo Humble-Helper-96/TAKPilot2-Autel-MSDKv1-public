@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="24dp"
+    android:viewportWidth="28"
+    android:viewportHeight="24">
+    <!-- Same glyph as ic_rth.xml, but the house outline is green — shown once a home point is
+         set, so the pilot has a visual confirmation without hunting for a text readout. -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FF4CAF50"
+        android:strokeWidth="2.0"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M0.98,10.26L14,1L27.03,10.26" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FF4CAF50"
+        android:strokeWidth="2.0"
+        android:pathData="M3.86,10.26v10.42a2.32,2.32 0 0,0 2.32,2.32h15.64a2.32,2.32 0 0,0 2.32,-2.32v-10.42" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFE53935"
+        android:strokeWidth="1.7"
+        android:pathData="M14,13.16m-4.98,0a4.98,4.98 0 1,0 9.96,0a4.98,4.98 0 1,0 -9.96,0" />
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFE53935"
+        android:strokeWidth="1.7"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M16.66,13.16H11.34M11.34,13.16L13.65,10.84M11.34,13.16L13.65,15.48" />
+</vector>

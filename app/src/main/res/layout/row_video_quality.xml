@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One video quality tier button. Inflated once per TranscodeProfile rather than written out
+     three times, so adding a tier can never leave a stale row behind in the menu. Same pattern
+     as row_ar_category.xml. -->
+<RadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/takColumnRadio" />
